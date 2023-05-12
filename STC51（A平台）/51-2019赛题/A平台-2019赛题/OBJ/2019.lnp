@@ -1,0 +1,8 @@
+"..\OBJ\main.obj",
+"..\OBJ\sys.obj",
+"..\OBJ\key.obj",
+"..\OBJ\lcd12864.obj",
+"..\OBJ\motor.obj",
+"..\OBJ\timer.obj" 
+TO "..\OBJ\2019" 
+PRINT(".\2019.m51") RAMSIZE(256) 

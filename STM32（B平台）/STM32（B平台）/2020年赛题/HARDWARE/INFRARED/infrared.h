@@ -1,0 +1,19 @@
+#ifndef __INFRARED_H
+#define __INFRARED_H	 
+#include "sys.h"
+
+//////////////////////////////////////////////////////////////////////////////////	 
+//红外对管检测驱动代码									  
+//////////////////////////////////////////////////////////////////////////////////   	 
+
+
+
+ 
+#define INFRARED_IO   GPIO_ReadInputDataBit(GPIOB,GPIO_Pin_13)//读取 红外对管IO 
+
+void INFRARED_Init(void);//IO初始化
+
+
+
+				    
+#endif
