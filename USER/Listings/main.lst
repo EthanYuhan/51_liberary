@@ -1,0 +1,393 @@
+C51 COMPILER V9.54   MAIN                                                                  05/10/2023 22:22:28 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN .\Objects\main.obj
+COMPILER INVOKED BY: D:\keil5\C51\BIN\C51.EXE main.c OPTIMIZE(8,SPEED) BROWSE INCDIR(..\HARDWARE\ad;..\HARDWARE\ds1302;.
+                    -.\HARDWARE\key;..\HARDWARE\lcd12864;..\HARDWARE\timer;..\SYSTEM\sys) DEBUG OBJECTEXTEND PRINT(.\Listings\main.lst) TABS(
+                    -2) OBJECT(.\Objects\main.obj)
+
+line level    source
+
+   1          #include "stc15f2k60s2.h"
+   2          #include <intrins.h>
+   3          #include <stdio.h>
+   4          #include "string.h"
+   5          #include "sys.h"
+   6          #include "lcd12864.h"
+   7          #include "key.h"
+   8          #include "timer.h"
+   9          #include "ad.h"
+  10          #include "ds1302.h"
+  11          
+  12          
+  13          
+  14          u8 code CharCodeLine1[]="CZCJJQ";       //第一行显示字符
+  15          u8 code CharCodeLine2[]="0302";         //第二行显示字符
+  16          u8 code MileValue[]="mile：       km";  //显示行驶里程
+  17          u8 code CostValue[]="cost：     yuan";  //显示应收取费用
+  18          u8 code WaiteTimeValue[]="delay ：    min"; //显示应收取费用
+  19          
+  20          u8  StartDrive = 0 ;  //0-停车服务结束 1-开始服务计价中 2-静止等待状态
+  21          u16 MileNum = 0;    //里程计数
+  22          u16 CostNum = 0;      //应收费用计数
+  23          u16 WaiteTimeNum = 0; //等待时间
+  24          u16 StartPrice = 6;   //起步价 默认 6
+  25          u8  TimeNum = 1;      //时段1/2 默认为1
+  26          u16 ad;               //ADC采样值
+  27          u8  MoterSpeed =8;    //通过定时器2控制步进电机转速
+  28          u8  AdcFlag = 0 ;     //adc采样标志
+  29          u16 InterruptCount = 0 ;  //码盘中断计数
+  30          
+  31          
+  32          extern u8 KeyCode;      //按键键值
+  33          extern u16 TimerCount ; //定时器计数
+  34          extern u8 PulseNum;     //脉冲计数
+  35          extern u16 WaiteTimeCount; //静止状态等待时间计数
+  36          
+  37          
+  38          void IO_init(void)  //IO口初始化
+  39          {
+  40   1        //IO配置为准双向IO口 
+  41   1        P0M0 = 0X00;  P0M1 = 0X00;  
+  42   1        P1M0 = 0X00;  P1M1 = 0X00;
+  43   1        P2M0 = 0X00;  P2M1 = 0X00;
+  44   1        P3M0 = 0X00;  P3M1 = 0X00;
+  45   1        P4M0 = 0X00;  P4M1 = 0X00;    
+  46   1        P5M0 = 0X00;  P5M1 = 0X00;    
+  47   1        P6M0 = 0X00;  P6M1 = 0X00;    
+  48   1        P7M0 = 0X00;  P7M1 = 0X00;  
+  49   1        
+  50   1        //设置推挽输出
+  51   1        P2M1 &= ~(1<<2),P2M0 |=  (1<<2); //12864LCD设置
+  52   1        P2M1 &= ~(1<<1),P2M0 |=  (1<<1); 
+  53   1        P2M1 &= ~(1<<0),P2M0 |=  (1<<0); 
+C51 COMPILER V9.54   MAIN                                                                  05/10/2023 22:22:28 PAGE 2   
+
+  54   1        P1M1 &= ~(1<<3),P1M0 |=  (1<<3); //步进电机
+  55   1        P1M1 &= ~(1<<4),P1M0 |=  (1<<4); 
+  56   1        P1M1 &= ~(1<<1),P1M0 |=  (1<<1); 
+  57   1        P1M1 &= ~(1<<2),P1M0 |=  (1<<2); 
+  58   1        P5M1 &= ~(1<<5),P5M0 |=  (1<<5); //蜂鸣器
+  59   1        P5M1 &= ~(1<<2),P5M0 |=  (1<<2); //继电器
+  60   1      }
+  61          
+  62          
+  63          void Roll(void)  //卷动显示两行字
+  64          { 
+  65   1        uchar i;  
+  66   1        
+  67   1        //为显示上半屏第一行字符做准备，地址0xa0  
+  68   1        //详细参考文章：https://wenku.baidu.com/view/375ec764cc22bcd127ff0c9a.html  
+  69   1        LCD12864_WriteCmd(0xa0);  
+  70   1        while(CharCodeLine1[i]!='\0')
+  71   1        {
+  72   2          LCD12864_WriteData(CharCodeLine1[i]);
+  73   2          i++;
+  74   2        }
+  75   1        i=0;
+  76   1        //为显示上半屏第二行字符做准备，地址0xb0    
+  77   1        LCD12864_WriteCmd(0xb0);    
+  78   1        while(CharCodeLine2[i]!='\0')
+  79   1        {
+  80   2          LCD12864_WriteData(CharCodeLine2[i]);
+  81   2          i++;
+  82   2        }
+  83   1        
+  84   1          for(i=0;i<33;i++)    //上半屏卷动显示
+  85   1        {
+  86   2            LCD12864_VerticalRoll(i);
+  87   2            Delay100ms();  //每行高16个像素，两行32像素，0.1秒卷动1像素，两行字显示结束共需要3.2秒
+  88   2        }
+  89   1        LCD12864_WriteCmd(0x30); //恢复基本指令集
+  90   1      }
+  91          
+  92          
+  93          
+  94          
+  95          
+  96          
+  97          void main(void)  //主函数
+  98          { 
+  99   1        u8 i; 
+ 100   1        u8 temp;
+ 101   1      
+ 102   1        IO_init();         //IO口初始化   
+ 103   1          LCD12864_Init();         //12864液晶初始化  
+ 104   1        Give(0x00);        //停止步进电机
+ 105   1        
+ 106   1        Roll();                //卷动显示两行字 
+ 107   1        Delay100ms(); 
+ 108   1        
+ 109   1        LCD12864_WriteCmd(0x01); //清除LCD12864的显示内容 
+ 110   1        LCD12864_SetWindow(0,0); //第1行显示行驶里程
+ 111   1        while(MileValue[i]!='\0')
+ 112   1        {
+ 113   2          LCD12864_WriteData(MileValue[i]);
+ 114   2          i++;
+ 115   2        }
+C51 COMPILER V9.54   MAIN                                                                  05/10/2023 22:22:28 PAGE 3   
+
+ 116   1        i=0;  
+ 117   1        LCD12864_SetWindow(1,0); //第2行显示应收取费用
+ 118   1        while(CostValue[i]!='\0')  
+ 119   1        {
+ 120   2          LCD12864_WriteData(CostValue[i]);
+ 121   2          i++;
+ 122   2        }
+ 123   1        i=0;
+ 124   1          
+ 125   1        while(1)  //主循环
+ 126   1        { 
+ 127   2          IO_KeyScan();   //按键扫描 检测按键 
+ 128   2          
+ 129   2          ds1302_scan();  //RTC时间显示 时分
+ 130   2          delay1ms(10);   //延时
+ 131   2           
+ 132   2          if(KeyCode ==1) //S1按下（矩阵键盘第一键）
+ 133   2          {
+ 134   3            KeyCode=0;        
+ 135   3            if(StartDrive==0)  //0-服务结束状态(停车)
+ 136   3            {
+ 137   4              StartDrive=1;
+ 138   4              PulseNum =0 ;
+ 139   4              TimerCount = 0;       
+ 140   4              InterruptCount = 0; //里程计数清零
+ 141   4              WaiteTimeCount = 0; //静止等待时间清零
+ 142   4              MileNum = 0;    //里程计数
+ 143   4              CostNum = 0;    //应收费用计数
+ 144   4              WaiteTimeNum = 0;   //等待时间
+ 145   4              
+ 146   4              Timer2Init(); //定时器2初始化       
+ 147   4              IE2 |=0x04;   //开定时器2中断--定时器控制步进电机转动
+ 148   4              IT1 =1;     //设置INT1的中断类型（1：仅下降沿 0：上升沿货下降沿）
+ 149   4              EX1 =1;       //使能INT1中断    
+ 150   4              EA  =1;       //开总中断 
+ 151   4            }
+ 152   3            else if(StartDrive==1) //1-开始服务计价中状态
+ 153   3            {
+ 154   4              StartDrive=0;//停止服务停止计价       
+ 155   4              IE2 &=~0x04; //关定时器2中断
+ 156   4              EA  =0;      //关总中断           
+ 157   4              Give(0x00);  //停止步进电机   
+ 158   4            }   
+ 159   3          }
+ 160   2          else if(KeyCode ==2) //S2按下
+ 161   2          {
+ 162   3            KeyCode=0;      
+ 163   3            if(StartDrive==1) 
+ 164   3            {
+ 165   4              StartDrive=2; //进入服务结束状态(停车)      
+ 166   4              IE2 &=~0x04;  //关定时器2中断               
+ 167   4              Give(0x00);   //停止步进电机  
+ 168   4                
+ 169   4              Timer0Init(); //定时器0初始化
+ 170   4              ET0 =1;     //使能定时器中断  
+ 171   4              TR0 =1;     //定时器0开始计时--计算等待时间
+ 172   4              EA  =1;       //开总中断        
+ 173   4      
+ 174   4              LCD12864_SetWindow(2,0); //第3行显示等待时间
+ 175   4              while(WaiteTimeValue[i]!='\0')  
+ 176   4              {
+ 177   5                LCD12864_WriteData(WaiteTimeValue[i]);
+C51 COMPILER V9.54   MAIN                                                                  05/10/2023 22:22:28 PAGE 4   
+
+ 178   5                i++;
+ 179   5              }
+ 180   4              i=0;      
+ 181   4            }
+ 182   3            else if(StartDrive==2) 
+ 183   3            {
+ 184   4              StartDrive=1; //退出静止状态        
+ 185   4              ET0 =0;     //关 定时器中断 
+ 186   4                TR0 =0;     //关 定时器0开始计时        
+ 187   4              IE2 |=0x04;     //开定时器2中断--定时器控制步进电机转动       
+ 188   4      
+ 189   4              LCD12864_SetWindow(2,4);//第3行----显示等待时间
+ 190   4              WaiteTimeNum=WaiteTimeCount/20; //分钟数，用1秒代替5分钟 
+ 191   4              LCD12864_WriteData(WaiteTimeNum/1000%10+0x30);//千位
+ 192   4              LCD12864_WriteData(WaiteTimeNum/100%10+0x30);       
+ 193   4              LCD12864_WriteData(WaiteTimeNum/10%10+0x30);
+ 194   4              LCD12864_WriteData(WaiteTimeNum%10+0x30);
+ 195   4            }
+ 196   3          }
+ 197   2          else if(KeyCode ==3) //S3按下切换时段
+ 198   2          {
+ 199   3            KeyCode=0;      
+ 200   3            if(TimeNum==1)
+ 201   3            {
+ 202   4              TimeNum=2;
+ 203   4              StartPrice = 7;
+ 204   4            }
+ 205   3            else
+ 206   3            {
+ 207   4              TimeNum=1;
+ 208   4              StartPrice = 6;
+ 209   4            }
+ 210   3          }
+ 211   2          
+ 212   2          else if(KeyCode ==13) //RTC时间调整  时加一
+ 213   2          {
+ 214   3            KeyCode=0;  
+ 215   3                temp = bcd_read(0x85);//时        
+ 216   3            if(temp==23) temp=0;
+ 217   3            else temp=temp+1;
+ 218   3            temp = temp/10*16+temp%10;
+ 219   3            Write_Ds1302(0x8E,0X00);   //写使能 
+ 220   3            Write_Ds1302(0x84,temp);  
+ 221   3            Write_Ds1302(0x8E,0x80);   //写禁止
+ 222   3          }
+ 223   2          else if(KeyCode ==14) //RTC时间调整 时减一
+ 224   2          {
+ 225   3            KeyCode=0;
+ 226   3            temp = bcd_read(0x85);//时      
+ 227   3            if(temp==0) temp=23;
+ 228   3            else temp=temp-1;
+ 229   3            temp = temp/10*16+temp%10;
+ 230   3            Write_Ds1302(0x8E,0X00);   //写使能 
+ 231   3            Write_Ds1302(0x84,temp);  
+ 232   3            Write_Ds1302(0x8E,0x80);   //写禁止
+ 233   3          }
+ 234   2          else if(KeyCode ==15) //RTC时间调整  分加一
+ 235   2          {
+ 236   3            KeyCode=0;
+ 237   3            temp = bcd_read(0x83);//分        
+ 238   3            if(temp==59) temp=0;
+ 239   3            else temp=temp+1;
+C51 COMPILER V9.54   MAIN                                                                  05/10/2023 22:22:28 PAGE 5   
+
+ 240   3            temp = temp/10*16+temp%10;
+ 241   3            Write_Ds1302(0x8E,0X00);   //写使能 
+ 242   3            Write_Ds1302(0x82,temp);  
+ 243   3            Write_Ds1302(0x8E,0x80);   //写禁止     
+ 244   3          }
+ 245   2          else if(KeyCode ==16) //RTC时间调整 分减一
+ 246   2          {
+ 247   3            KeyCode=0;
+ 248   3            temp = bcd_read(0x83);//分      
+ 249   3            if(temp==0) temp=59;
+ 250   3            else temp=temp-1;
+ 251   3            temp = temp/10*16+temp%10;
+ 252   3            Write_Ds1302(0x8E,0X00);   //写使能 
+ 253   3            Write_Ds1302(0x82,temp);  
+ 254   3            Write_Ds1302(0x8E,0x80);   //写禁止
+ 255   3          }
+ 256   2          
+ 257   2          
+ 258   2          
+ 259   2          if(StartDrive==1)  //开始计价 并显示
+ 260   2          {
+ 261   3            
+ 262   3            if(AdcFlag > 0) //ADC采样一次
+ 263   3            {
+ 264   4              AdcFlag = 0;
+ 265   4              ad=GetADCResult(0);        //采集AD 值为300-1020      
+ 266   4                MoterSpeed =(float)ad*0.05-13; //4-40范围
+ 267   4            }
+ 268   3              
+ 269   3      
+ 270   3      #if DRIVING_SIMULATION  
+                    
+                    MileNum=PulseNum*4;     //定时脉冲情况下1秒行驶4km
+                    LCD12864_SetWindow(0,3);//第1行 显示里程
+                    LCD12864_WriteData(MileNum/10000%10+0x30);
+                    LCD12864_WriteData(MileNum/1000%10+0x30); //千位
+                    LCD12864_WriteData(MileNum/100%10+0x30);      
+                    LCD12864_WriteData(MileNum/10%10+0x30);     
+                    LCD12864_WriteData(MileNum%10+0x30);
+                    
+                    CostNum=(MileNum-3)*12+60;  //因为1秒即运行4km，已经超过起步价，此价格为10倍真实价格
+                    LCD12864_SetWindow(1,3);    //第2行 显示应收取费用  
+                    LCD12864_WriteData(CostNum/1000%10+0x30);//千位
+                    LCD12864_WriteData(CostNum/100%10+0x30);      
+                    LCD12864_WriteData(CostNum/10%10+0x30); 
+                    LCD12864_WriteData('.');
+                    LCD12864_WriteData(CostNum%10+0x30);
+                        
+              #else                 //码盘一圈20格，1圈1米，为演示方便乘1000倍，即1圈1km 1格0.05km
+ 289   3            MileNum=InterruptCount*5; //步进电机码盘计算，为显示小数点 乘100倍                    
+ 290   3            LCD12864_SetWindow(0,3);  //第1行显示里程
+ 291   3            LCD12864_WriteData(MileNum/10000%10+0x30);
+ 292   3            LCD12864_WriteData(MileNum/1000%10+0x30);//千位
+ 293   3            LCD12864_WriteData(MileNum/100%10+0x30);  
+ 294   3            LCD12864_WriteData('.');                 //两位小数点
+ 295   3            LCD12864_WriteData(MileNum/10%10+0x30);     
+ 296   3            LCD12864_WriteData(MileNum%10+0x30);
+ 297   3            
+ 298   3            if(MileNum<= 300)  //乘100倍，起步价区间3km
+ 299   3            {
+ 300   4              CostNum = (StartPrice*100) +(WaiteTimeNum*20) ; //真实价格100倍
+ 301   4            }
+C51 COMPILER V9.54   MAIN                                                                  05/10/2023 22:22:28 PAGE 6   
+
+ 302   3            else              //超出起步价区间
+ 303   3            {
+ 304   4                            //真实价格100倍
+ 305   4              CostNum =(float)((MileNum-300)*1.2)+(StartPrice*100)+(WaiteTimeNum*20) ;
+ 306   4            }     
+ 307   3            LCD12864_SetWindow(1,3);//第2行 显示应收取费用    
+ 308   3            LCD12864_WriteData(CostNum/10000%10+0x30);
+ 309   3            LCD12864_WriteData(CostNum/1000%10+0x30);//千位
+ 310   3            LCD12864_WriteData(CostNum/100%10+0x30);  
+ 311   3            LCD12864_WriteData('.');      
+ 312   3            LCD12864_WriteData(CostNum/10%10+0x30); 
+ 313   3      #endif
+ 314   3      
+ 315   3          }
+ 316   2          else if(StartDrive==2) //静止等待状态 循环显示等待时间
+ 317   2          {
+ 318   3            LCD12864_SetWindow(2,4);        //第3行显示等待时间
+ 319   3            WaiteTimeNum=WaiteTimeCount/20; //用1秒代替5分钟
+ 320   3            LCD12864_WriteData(WaiteTimeNum/1000%10+0x30);//千位
+ 321   3            LCD12864_WriteData(WaiteTimeNum/100%10+0x30);       
+ 322   3            LCD12864_WriteData(WaiteTimeNum/10%10+0x30);
+ 323   3            LCD12864_WriteData(WaiteTimeNum%10+0x30);
+ 324   3            
+ 325   3            
+ 326   3            //显示总金额
+ 327   3            if(MileNum<= 300)  //乘100倍  起步价区间3km
+ 328   3            {
+ 329   4              CostNum = (StartPrice*100) +(WaiteTimeNum*20) ; //真实价格100倍
+ 330   4            }
+ 331   3            else              //超出起步价区间
+ 332   3            {
+ 333   4                            //真实价格100倍
+ 334   4              CostNum =(float)((MileNum-300)*1.2)+(StartPrice*100)+(WaiteTimeNum*20) ;
+ 335   4            }     
+ 336   3            LCD12864_SetWindow(1,3);//第2行 显示应收取费用    
+ 337   3            LCD12864_WriteData(CostNum/10000%10+0x30);
+ 338   3            LCD12864_WriteData(CostNum/1000%10+0x30);//千位
+ 339   3            LCD12864_WriteData(CostNum/100%10+0x30);  
+ 340   3            LCD12864_WriteData('.');      
+ 341   3            LCD12864_WriteData(CostNum/10%10+0x30); 
+ 342   3          }
+ 343   2        }
+ 344   1      }
+ 345          
+ 346          
+ 347          
+ 348          void exint0()  interrupt 2 //外部中断1中断
+ 349          {
+ 350   1        InterruptCount ++ ;    //码盘一圈20格
+ 351   1      }
+ 352          
+ 353          
+ 354          
+ 355          
+ 356          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =   1650    ----
+   CONSTANT SIZE    =     60    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+C51 COMPILER V9.54   MAIN                                                                  05/10/2023 22:22:28 PAGE 7   
+
+   DATA SIZE        =     16       3
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
