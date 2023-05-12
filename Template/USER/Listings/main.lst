@@ -1,11 +1,11 @@
-C51 COMPILER V9.54   MAIN                                                                  05/10/2023 22:22:28 PAGE 1   
+C51 COMPILER V9.60.7.0   MAIN                                                              05/12/2023 20:51:28 PAGE 1   
 
 
-C51 COMPILER V9.54, COMPILATION OF MODULE MAIN
+C51 COMPILER V9.60.7.0, COMPILATION OF MODULE MAIN
 OBJECT MODULE PLACED IN .\Objects\main.obj
-COMPILER INVOKED BY: D:\keil5\C51\BIN\C51.EXE main.c OPTIMIZE(8,SPEED) BROWSE INCDIR(..\HARDWARE\ad;..\HARDWARE\ds1302;.
-                    -.\HARDWARE\key;..\HARDWARE\lcd12864;..\HARDWARE\timer;..\SYSTEM\sys) DEBUG OBJECTEXTEND PRINT(.\Listings\main.lst) TABS(
-                    -2) OBJECT(.\Objects\main.obj)
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE main.c OPTIMIZE(8,SPEED) BROWSE INCDIR(..\HARDWARE\ad;..\HARDWARE\ds1302
+                    -;..\HARDWARE\key;..\HARDWARE\lcd12864;..\HARDWARE\timer;..\SYSTEM\sys) DEBUG OBJECTEXTEND PRINT(.\Listings\main.lst) TAB
+                    -S(2) OBJECT(.\Objects\main.obj)
 
 line level    source
 
@@ -62,7 +62,7 @@ line level    source
   51   1        P2M1 &= ~(1<<2),P2M0 |=  (1<<2); //12864LCD设置
   52   1        P2M1 &= ~(1<<1),P2M0 |=  (1<<1); 
   53   1        P2M1 &= ~(1<<0),P2M0 |=  (1<<0); 
-C51 COMPILER V9.54   MAIN                                                                  05/10/2023 22:22:28 PAGE 2   
+C51 COMPILER V9.60.7.0   MAIN                                                              05/12/2023 20:51:28 PAGE 2   
 
   54   1        P1M1 &= ~(1<<3),P1M0 |=  (1<<3); //步进电机
   55   1        P1M1 &= ~(1<<4),P1M0 |=  (1<<4); 
@@ -126,7 +126,7 @@ line level    source
  113   2          LCD12864_WriteData(MileValue[i]);
  114   2          i++;
  115   2        }
-C51 COMPILER V9.54   MAIN                                                                  05/10/2023 22:22:28 PAGE 3   
+C51 COMPILER V9.60.7.0   MAIN                                                              05/12/2023 20:51:28 PAGE 3   
 
  116   1        i=0;  
  117   1        LCD12864_SetWindow(1,0); //第2行显示应收取费用
@@ -190,7 +190,7 @@ line level    source
  175   4              while(WaiteTimeValue[i]!='\0')  
  176   4              {
  177   5                LCD12864_WriteData(WaiteTimeValue[i]);
-C51 COMPILER V9.54   MAIN                                                                  05/10/2023 22:22:28 PAGE 4   
+C51 COMPILER V9.60.7.0   MAIN                                                              05/12/2023 20:51:28 PAGE 4   
 
  178   5                i++;
  179   5              }
@@ -254,7 +254,7 @@ line level    source
  237   3            temp = bcd_read(0x83);//分        
  238   3            if(temp==59) temp=0;
  239   3            else temp=temp+1;
-C51 COMPILER V9.54   MAIN                                                                  05/10/2023 22:22:28 PAGE 5   
+C51 COMPILER V9.60.7.0   MAIN                                                              05/12/2023 20:51:28 PAGE 5   
 
  240   3            temp = temp/10*16+temp%10;
  241   3            Write_Ds1302(0x8E,0X00);   //写使能 
@@ -318,7 +318,7 @@ line level    source
  299   3            {
  300   4              CostNum = (StartPrice*100) +(WaiteTimeNum*20) ; //真实价格100倍
  301   4            }
-C51 COMPILER V9.54   MAIN                                                                  05/10/2023 22:22:28 PAGE 6   
+C51 COMPILER V9.60.7.0   MAIN                                                              05/12/2023 20:51:28 PAGE 6   
 
  302   3            else              //超出起步价区间
  303   3            {
@@ -382,7 +382,7 @@ MODULE INFORMATION:   STATIC OVERLAYABLE
    CONSTANT SIZE    =     60    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----
-C51 COMPILER V9.54   MAIN                                                                  05/10/2023 22:22:28 PAGE 7   
+C51 COMPILER V9.60.7.0   MAIN                                                              05/12/2023 20:51:28 PAGE 7   
 
    DATA SIZE        =     16       3
    IDATA SIZE       =   ----    ----

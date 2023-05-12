@@ -1,11 +1,11 @@
-C51 COMPILER V9.54   AD                                                                    05/10/2023 22:22:28 PAGE 1   
+C51 COMPILER V9.60.7.0   AD                                                                05/12/2023 20:51:28 PAGE 1   
 
 
-C51 COMPILER V9.54, COMPILATION OF MODULE AD
+C51 COMPILER V9.60.7.0, COMPILATION OF MODULE AD
 OBJECT MODULE PLACED IN .\Objects\ad.obj
-COMPILER INVOKED BY: D:\keil5\C51\BIN\C51.EXE ..\HARDWARE\ad\ad.c OPTIMIZE(8,SPEED) BROWSE INCDIR(..\HARDWARE\ad;..\HARD
-                    -WARE\ds1302;..\HARDWARE\key;..\HARDWARE\lcd12864;..\HARDWARE\timer;..\SYSTEM\sys) DEBUG OBJECTEXTEND PRINT(.\Listings\ad
-                    -.lst) TABS(2) OBJECT(.\Objects\ad.obj)
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE ..\HARDWARE\ad\ad.c OPTIMIZE(8,SPEED) BROWSE INCDIR(..\HARDWARE\ad;..\HA
+                    -RDWARE\ds1302;..\HARDWARE\key;..\HARDWARE\lcd12864;..\HARDWARE\timer;..\SYSTEM\sys) DEBUG OBJECTEXTEND PRINT(.\Listings\
+                    -ad.lst) TABS(2) OBJECT(.\Objects\ad.obj)
 
 line level    source
 
@@ -62,7 +62,7 @@ line level    source
   49          
 
 
-C51 COMPILER V9.54   AD                                                                    05/10/2023 22:22:28 PAGE 2   
+C51 COMPILER V9.60.7.0   AD                                                                05/12/2023 20:51:28 PAGE 2   
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
    CODE SIZE        =     38    ----

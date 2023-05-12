@@ -1,11 +1,11 @@
-C51 COMPILER V9.54   SYS                                                                   05/10/2023 22:22:28 PAGE 1   
+C51 COMPILER V9.60.7.0   SYS                                                               05/12/2023 20:51:29 PAGE 1   
 
 
-C51 COMPILER V9.54, COMPILATION OF MODULE SYS
+C51 COMPILER V9.60.7.0, COMPILATION OF MODULE SYS
 OBJECT MODULE PLACED IN .\Objects\sys.obj
-COMPILER INVOKED BY: D:\keil5\C51\BIN\C51.EXE ..\SYSTEM\sys\sys.c OPTIMIZE(8,SPEED) BROWSE INCDIR(..\HARDWARE\ad;..\HARD
-                    -WARE\ds1302;..\HARDWARE\key;..\HARDWARE\lcd12864;..\HARDWARE\timer;..\SYSTEM\sys) DEBUG OBJECTEXTEND PRINT(.\Listings\sy
-                    -s.lst) TABS(2) OBJECT(.\Objects\sys.obj)
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE ..\SYSTEM\sys\sys.c OPTIMIZE(8,SPEED) BROWSE INCDIR(..\HARDWARE\ad;..\HA
+                    -RDWARE\ds1302;..\HARDWARE\key;..\HARDWARE\lcd12864;..\HARDWARE\timer;..\SYSTEM\sys) DEBUG OBJECTEXTEND PRINT(.\Listings\
+                    -sys.lst) TABS(2) OBJECT(.\Objects\sys.obj)
 
 line level    source
 
@@ -62,7 +62,7 @@ line level    source
   51   1        for(m=0;m<5;m++);
   52   1       }
   53          
-C51 COMPILER V9.54   SYS                                                                   05/10/2023 22:22:28 PAGE 2   
+C51 COMPILER V9.60.7.0   SYS                                                               05/12/2023 20:51:29 PAGE 2   
 
   54           
   55           //1ºÁÃë ÑÓÊ±

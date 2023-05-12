@@ -1,11 +1,11 @@
-C51 COMPILER V9.54   DS1302                                                                05/10/2023 22:22:28 PAGE 1   
+C51 COMPILER V9.60.7.0   DS1302                                                            05/12/2023 20:51:28 PAGE 1   
 
 
-C51 COMPILER V9.54, COMPILATION OF MODULE DS1302
+C51 COMPILER V9.60.7.0, COMPILATION OF MODULE DS1302
 OBJECT MODULE PLACED IN .\Objects\ds1302.obj
-COMPILER INVOKED BY: D:\keil5\C51\BIN\C51.EXE ..\HARDWARE\ds1302\ds1302.c OPTIMIZE(8,SPEED) BROWSE INCDIR(..\HARDWARE\ad
-                    -;..\HARDWARE\ds1302;..\HARDWARE\key;..\HARDWARE\lcd12864;..\HARDWARE\timer;..\SYSTEM\sys) DEBUG OBJECTEXTEND PRINT(.\Lis
-                    -tings\ds1302.lst) TABS(2) OBJECT(.\Objects\ds1302.obj)
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE ..\HARDWARE\ds1302\ds1302.c OPTIMIZE(8,SPEED) BROWSE INCDIR(..\HARDWARE\
+                    -ad;..\HARDWARE\ds1302;..\HARDWARE\key;..\HARDWARE\lcd12864;..\HARDWARE\timer;..\SYSTEM\sys) DEBUG OBJECTEXTEND PRINT(.\L
+                    -istings\ds1302.lst) TABS(2) OBJECT(.\Objects\ds1302.obj)
 
 line level    source
 
@@ -62,7 +62,7 @@ line level    source
   50          //address 读取数据的地址
   51          //返回 读取的数据值
   52          u8 Read_Ds1302 ( u8 address )
-C51 COMPILER V9.54   DS1302                                                                05/10/2023 22:22:28 PAGE 2   
+C51 COMPILER V9.60.7.0   DS1302                                                            05/12/2023 20:51:28 PAGE 2   
 
   53          {
   54   1        u8 i,temp=0x00;
@@ -126,7 +126,7 @@ line level    source
  112          
  113          
  114          
-C51 COMPILER V9.54   DS1302                                                                05/10/2023 22:22:28 PAGE 3   
+C51 COMPILER V9.60.7.0   DS1302                                                            05/12/2023 20:51:28 PAGE 3   
 
  115          /*
  116          
