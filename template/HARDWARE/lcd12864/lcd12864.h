@@ -30,5 +30,6 @@ void LCD12864_Init();
 void LCD12864_ClearScreen(void);
 void LCD12864_SetWindow(uchar x, uchar y);
 void LCD12864_VerticalRoll(uchar N_Pixel); //¾í¶¯ÏÔÊ¾
+void Roll();
 
 #endif
