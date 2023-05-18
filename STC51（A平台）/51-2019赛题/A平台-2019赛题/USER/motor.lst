@@ -1,7 +1,7 @@
-C51 COMPILER V9.59.0.0   MOTOR                                                             04/11/2021 12:11:53 PAGE 1   
+C51 COMPILER V9.60.7.0   MOTOR                                                             05/18/2023 20:32:05 PAGE 1   
 
 
-C51 COMPILER V9.59.0.0, COMPILATION OF MODULE MOTOR
+C51 COMPILER V9.60.7.0, COMPILATION OF MODULE MOTOR
 OBJECT MODULE PLACED IN ..\OBJ\motor.obj
 COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE ..\HARDWARE\motor\motor.c OPTIMIZE(8,SPEED) BROWSE INCDIR(..\USER;..\REA
                     -DME;..\HARDWARE\lcd12864;..\SYSTEM\delay;..\SYSTEM\sys;..\HARDWARE\key;..\HARDWARE\motor;..\HARDWARE\timer) DEBUG OBJECT
@@ -62,7 +62,7 @@ line level    source
   51   2          for(i=0;i<4;i++)  //旋转45度
   52   2          {
   53   3           MotorData=phasecw[i];
-C51 COMPILER V9.59.0.0   MOTOR                                                             04/11/2021 12:11:53 PAGE 2   
+C51 COMPILER V9.60.7.0   MOTOR                                                             05/18/2023 20:32:05 PAGE 2   
 
   54   3           Delay_xms(speed);//转速调节
   55   3          } 
@@ -118,7 +118,7 @@ line level    source
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    219    ----
+   CODE SIZE        =    177    ----
    CONSTANT SIZE    =   ----    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----
@@ -127,7 +127,7 @@ MODULE INFORMATION:   STATIC OVERLAYABLE
    BIT SIZE         =   ----    ----
 END OF MODULE INFORMATION.
 
-C51 COMPILER V9.59.0.0   MOTOR                                                             04/11/2021 12:11:53 PAGE 3   
+C51 COMPILER V9.60.7.0   MOTOR                                                             05/18/2023 20:32:05 PAGE 3   
 
 
 C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

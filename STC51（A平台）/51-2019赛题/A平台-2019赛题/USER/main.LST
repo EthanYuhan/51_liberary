@@ -1,7 +1,7 @@
-C51 COMPILER V9.59.0.0   MAIN                                                              04/11/2021 12:11:52 PAGE 1   
+C51 COMPILER V9.60.7.0   MAIN                                                              05/18/2023 20:32:04 PAGE 1   
 
 
-C51 COMPILER V9.59.0.0, COMPILATION OF MODULE MAIN
+C51 COMPILER V9.60.7.0, COMPILATION OF MODULE MAIN
 OBJECT MODULE PLACED IN ..\OBJ\main.obj
 COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE main.c OPTIMIZE(8,SPEED) BROWSE INCDIR(..\USER;..\README;..\HARDWARE\lcd
                     -12864;..\SYSTEM\delay;..\SYSTEM\sys;..\HARDWARE\key;..\HARDWARE\motor;..\HARDWARE\timer) DEBUG OBJECTEXTEND TABS(2) OBJE
@@ -62,7 +62,7 @@ line level    source
   51   1        P1M1 &= ~(1<<1),P1M0 |=  (1<<1); 
   52   1        P1M1 &= ~(1<<2),P1M0 |=  (1<<2); 
   53   1        P5M1 &= ~(1<<5),P5M0 |=  (1<<5); //·äÃùÆ÷
-C51 COMPILER V9.59.0.0   MAIN                                                              04/11/2021 12:11:52 PAGE 2   
+C51 COMPILER V9.60.7.0   MAIN                                                              05/18/2023 20:32:04 PAGE 2   
 
   54   1        P5M1 &= ~(1<<2),P5M0 |=  (1<<2); //¼ÌµçÆ÷
   55   1      }
@@ -126,7 +126,7 @@ line level    source
  112   1          {
  113   2            PressFloorValue|=0x04;  
  114   2            LCD12864_WriteCmd(0x8a);  
-C51 COMPILER V9.59.0.0   MAIN                                                              04/11/2021 12:11:52 PAGE 3   
+C51 COMPILER V9.60.7.0   MAIN                                                              05/18/2023 20:32:04 PAGE 3   
 
  115   2            LCD12864_WriteData('3');
  116   2            LCD12864_WriteData('o');
@@ -190,7 +190,7 @@ line level    source
  174   1        led=1;  
  175   1              
  176   1      
-C51 COMPILER V9.59.0.0   MAIN                                                              04/11/2021 12:11:52 PAGE 4   
+C51 COMPILER V9.60.7.0   MAIN                                                              05/18/2023 20:32:04 PAGE 4   
 
  177   1        n=CurrentFloor;   
  178   1        
@@ -254,7 +254,7 @@ line level    source
  236   1        i=0;  
  237   1        
  238   1        LCD12864_WriteCmd(0x88); //µÚÈýÐÐÏÔÊ¾±»°´ÏÂµÄÂ¥²ãºÅ ³õÊ¼ÖµÏÔÊ¾
-C51 COMPILER V9.59.0.0   MAIN                                                              04/11/2021 12:11:52 PAGE 5   
+C51 COMPILER V9.60.7.0   MAIN                                                              05/18/2023 20:32:04 PAGE 5   
 
  239   1        while(PRESSFloorNum[i]!='\0')  
  240   1        {
@@ -278,160 +278,160 @@ line level    source
  258   2            for (i=0;i<16;i++)    //Ö±½Ó¼ì²â16´Î°´¼ü
  259   2            {
  260   3              IO_KeyScan();            //°´¼üÉ¨Ãè ¼ì²â°´¼ü  
- 261   3              KeySetLiftUpDownValue(); //¸üÐÂPressFloorValue²¢ÏÔÊ¾±»°´ÏÂµÄÂ¥²ãºÅÐÅÏ¢    xoÏÔÊ¾
+ 261   3                KeySetLiftUpDownValue(); //¸üÐÂPressFloorValue²¢ÏÔÊ¾±»°´ÏÂµÄÂ¥²ãºÅÐÅÏ¢    xoÏÔÊ¾
  262   3            } 
  263   2          
- 264   2          if((GoTo5FloorFlag==1)&&(CurrentFloor!=5)&&((LiftDirection==0)) ) //µ±µçÌÝ¿ÕÏÐÊ±ÔËÐÐµ½5Â¥
- 265   2          {
- 266   3            if(CurrentFloor>5)
- 267   3            {
- 268   4              LiftDirection=2; //µçÌÝÏÂÐÐ
- 269   4            }
- 270   3            else
- 271   3            {
- 272   4              LiftDirection=1; //µçÌÝÉÏÐÐ
- 273   4            }
- 274   3            
- 275   3            GoTo5FloorFlag = 0; 
- 276   3            DesFloor = 5 ;        //Ä¿±êÂ¥²ã¸³Öµ5 
- 277   3            LCD12864_SetWindow(0,0);//µ÷ÊÔÐÅÏ¢        
- 278   3            LCD12864_WriteData(DesFloor+0x30);//µÚÒ»ÐÐÏÔÊ¾ µ÷ÊÔÐÅÏ¢ Ä¿µÄÂ¥²ãºÅ        
- 279   3            GoToFloor(DesFloor);  //µçÌÝÔËÐÐµ½5Â¥
- 280   3            
- 281   3          }   
+ 264   2          // if((GoTo5FloorFlag==1)&&(CurrentFloor!=5)&&((LiftDirection==0)) ) //µ±µçÌÝ¿ÕÏÐÊ±ÔËÐÐµ½5Â¥
+ 265   2          // {
+ 266   2          //  if(CurrentFloor>5)
+ 267   2          //  {
+ 268   2          //    LiftDirection=2; //µçÌÝÏÂÐÐ
+ 269   2          //  }
+ 270   2          //  else
+ 271   2          //  {
+ 272   2          //    LiftDirection=1; //µçÌÝÉÏÐÐ
+ 273   2          //  }
+ 274   2            
+ 275   2          //  GoTo5FloorFlag = 0; 
+ 276   2          //  DesFloor = 5 ;        //Ä¿±êÂ¥²ã¸³Öµ5 
+ 277   2          //  LCD12864_SetWindow(0,0);//µ÷ÊÔÐÅÏ¢        
+ 278   2          //  LCD12864_WriteData(DesFloor+0x30);//µÚÒ»ÐÐÏÔÊ¾ µ÷ÊÔÐÅÏ¢ Ä¿µÄÂ¥²ãºÅ        
+ 279   2          //  GoToFloor(DesFloor);  //µçÌÝÔËÐÐµ½5Â¥
+ 280   2            
+ 281   2          // }    
  282   2          
  283   2          
- 284   2          //-------------------µçÌÝ¿ØÖÆÂß¼­´¦Àí²¿·Ö-----------------------
+ 284   2          // //-------------------µçÌÝ¿ØÖÆÂß¼­´¦Àí²¿·Ö-----------------------
  285   2          
- 286   2          if((PressFloorValue>0)||(Floor9Value>0) )  //Â¥²ã°´¼üÓÐ±»°´ÏÂ    LiftDirection¸³Öµ²ßÂÔ     
- 287   2          {     
- 288   3            
- 289   3            if((LiftDirection==0)&&(PressFloorValue<(0x01<<(CurrentFloor-1)))&&(PressFloorValue>0))    //µ±Ç°Í£Ö¹×´
-             -Ì¬ µ±Ç°Â¥²ãÊýÒÔÏÂµÄÂ¥²ãÓÐ±»°´ÏÂ ÓÅÏÈÏÂÐÐ  0001 0000
- 290   3            {
- 291   4            LiftDirection = 2;  //ÏÂÐÐ
- 292   4            LCD12864_SetWindow(0,0);//µ÷ÊÔÐÅÏ¢
- 293   4            LCD12864_WriteData('D');  
- 294   4            }
- 295   3            else if((LiftDirection==0)&&(PressFloorValue>(0x01<<(CurrentFloor-1)))&&(PressFloorValue>0))
- 296   3            {
- 297   4            LiftDirection = 1;  //ÉÏÐÐ
- 298   4            LCD12864_SetWindow(0,0);//µ÷ÊÔÐÅÏ¢
- 299   4            LCD12864_WriteData('U');
-C51 COMPILER V9.59.0.0   MAIN                                                              04/11/2021 12:11:52 PAGE 6   
+ 286   2          // if((PressFloorValue>0)||(Floor9Value>0) )  //Â¥²ã°´¼üÓÐ±»°´ÏÂ    LiftDirection¸³Öµ²ßÂÔ     
+ 287   2          // {      
+ 288   2            
+ 289   2          //  if((LiftDirection==0)&&(PressFloorValue<(0x01<<(CurrentFloor-1)))&&(PressFloorValue>0))    //µ±Ç°Í£Ö
+             -¹×´Ì¬ µ±Ç°Â¥²ãÊýÒÔÏÂµÄÂ¥²ãÓÐ±»°´ÏÂ ÓÅÏÈÏÂÐÐ  0001 0000
+ 290   2          //  {
+ 291   2          //  LiftDirection = 2;  //ÏÂÐÐ
+ 292   2          //  LCD12864_SetWindow(0,0);//µ÷ÊÔÐÅÏ¢
+ 293   2          //  LCD12864_WriteData('D');  
+ 294   2          //  }
+ 295   2          //  else if((LiftDirection==0)&&(PressFloorValue>(0x01<<(CurrentFloor-1)))&&(PressFloorValue>0))
+ 296   2          //  {
+ 297   2          //  LiftDirection = 1;  //ÉÏÐÐ
+ 298   2          //  LCD12864_SetWindow(0,0);//µ÷ÊÔÐÅÏ¢
+ 299   2          //  LCD12864_WriteData('U');
+C51 COMPILER V9.60.7.0   MAIN                                                              05/18/2023 20:32:04 PAGE 6   
 
- 300   4            }
- 301   3              
- 302   3          }   
+ 300   2          //  }
+ 301   2              
+ 302   2          // }    
  303   2          
- 304   2            if((LiftDirection==2)&&(PressFloorValue>0) ) //µ±Ç°ÏÂÐÐ×´Ì¬    DesFloor¸³Öµ²ßÂÔ
- 305   2            { 
- 306   3              for(j=1;j<CurrentFloor;j++)
- 307   3              //for(j=CurrentFloor;j>0;j--)
- 308   3              {
- 309   4                if(((0x01<<(CurrentFloor-j-1))&PressFloorValue)> 0)
- 310   4                {
- 311   5                   break; 
- 312   5                }
- 313   4              }
- 314   3                  
- 315   3              if(j<CurrentFloor)
- 316   3              { 
- 317   4                if(DesFloor>0) //Èç¹û´ËÊ±DesFloor²»Îª0 ´ú±íÉè±¸ÕýÔÚÔËÐÐÖÐ
- 318   4                {
- 319   5                  if(DesFloor < CurrentFloor-j  )//¶ÔÓÚÏÂÐÐÀ´Ëµ
- 320   5                  {
- 321   6                    DesFloor = CurrentFloor-j;  //¸üÐÂDesFloor
- 322   6                  }
- 323   5                  
- 324   5                }
- 325   4                else DesFloor = CurrentFloor-j; 
- 326   4                
- 327   4              LCD12864_SetWindow(0,0);//µ÷ÊÔÐÅÏ¢        
- 328   4              LCD12864_WriteData(DesFloor+0x30);//µÚÒ»ÐÐÏÔÊ¾ µ÷ÊÔÐÅÏ¢ Ä¿µÄÂ¥²ãºÅ
- 329   4              
- 330   4              //GoToFloor(DesFloor);   //ÄÃ³öÈ¥ µ¥¶ÀÒ»²ãÒ»²ãÂ¥¿ØÖÆ
- 331   4              }
- 332   3              else   //if j==CurrentFloor µÄ´¦Àí·ÖÖ§    
- 333   3              {         
- 334   4               LiftDirection=0; //µçÌÝÍ£Ö¹ 
- 335   4               DesFloor = 0 ; //Ä¿±êÂ¥²ã¸³Öµ0         
- 336   4              }
- 337   3            }     
- 338   2            else if ((LiftDirection==1)&&(PressFloorValue>0))  //µ±Ç°ÉÏÐÐ×´Ì¬  DesFloor¸³Öµ²ßÂÔ
- 339   2            {
- 340   3              for(j=0;j<(8-CurrentFloor+1);j++)
- 341   3              //for(j=CurrentFloor-1;j>0;j--)
- 342   3              {
- 343   4                if(((0x01<<(CurrentFloor+j-1))&PressFloorValue)> 0)
- 344   4                {
- 345   5                   break; 
- 346   5                }
- 347   4              }
- 348   3              
- 349   3              if(j<(8-CurrentFloor+1))
- 350   3              { 
- 351   4                if(DesFloor>0) //Èç¹û´ËÊ±DesFloor²»Îª0 ´ú±íÉè±¸ÕýÔÚÔËÐÐÖÐ
- 352   4                {
- 353   5                  if(DesFloor > CurrentFloor+j  )//¶ÔÓÚÏÂÐÐÀ´Ëµ
- 354   5                  {
- 355   6                    DesFloor = CurrentFloor+j;  //¸üÐÂDesFloor
- 356   6                  }
- 357   5                  
- 358   5                }
- 359   4                else DesFloor = CurrentFloor+j; 
- 360   4                
- 361   4              LCD12864_SetWindow(0,0);//µ÷ÊÔÐÅÏ¢        
-C51 COMPILER V9.59.0.0   MAIN                                                              04/11/2021 12:11:52 PAGE 7   
+ 304   2          //  if((LiftDirection==2)&&(PressFloorValue>0) ) //µ±Ç°ÏÂÐÐ×´Ì¬    DesFloor¸³Öµ²ßÂÔ
+ 305   2          //  { 
+ 306   2          //    for(j=1;j<CurrentFloor;j++)
+ 307   2          //    //for(j=CurrentFloor;j>0;j--)
+ 308   2          //    {
+ 309   2          //      if(((0x01<<(CurrentFloor-j-1))&PressFloorValue)> 0)
+ 310   2          //      {
+ 311   2          //         break; 
+ 312   2          //      }
+ 313   2          //    }
+ 314   2                  
+ 315   2          //    if(j<CurrentFloor)
+ 316   2          //    { 
+ 317   2          //      if(DesFloor>0) //Èç¹û´ËÊ±DesFloor²»Îª0 ´ú±íÉè±¸ÕýÔÚÔËÐÐÖÐ
+ 318   2          //      {
+ 319   2          //        if(DesFloor < CurrentFloor-j  )//¶ÔÓÚÏÂÐÐÀ´Ëµ
+ 320   2          //        {
+ 321   2          //          DesFloor = CurrentFloor-j;  //¸üÐÂDesFloor
+ 322   2          //        }
+ 323   2                  
+ 324   2          //      }
+ 325   2          //      else DesFloor = CurrentFloor-j; 
+ 326   2                
+ 327   2          //    LCD12864_SetWindow(0,0);//µ÷ÊÔÐÅÏ¢        
+ 328   2          //    LCD12864_WriteData(DesFloor+0x30);//µÚÒ»ÐÐÏÔÊ¾ µ÷ÊÔÐÅÏ¢ Ä¿µÄÂ¥²ãºÅ
+ 329   2              
+ 330   2          //    //GoToFloor(DesFloor);   //ÄÃ³öÈ¥ µ¥¶ÀÒ»²ãÒ»²ãÂ¥¿ØÖÆ
+ 331   2          //    }
+ 332   2          //    else   //if j==CurrentFloor µÄ´¦Àí·ÖÖ§    
+ 333   2          //    {         
+ 334   2          //     LiftDirection=0; //µçÌÝÍ£Ö¹ 
+ 335   2          //     DesFloor = 0 ; //Ä¿±êÂ¥²ã¸³Öµ0         
+ 336   2          //    }
+ 337   2          //  }     
+ 338   2          //  else if ((LiftDirection==1)&&(PressFloorValue>0))  //µ±Ç°ÉÏÐÐ×´Ì¬  DesFloor¸³Öµ²ßÂÔ
+ 339   2          //  {
+ 340   2          //    for(j=0;j<(8-CurrentFloor+1);j++)
+ 341   2          //    //for(j=CurrentFloor-1;j>0;j--)
+ 342   2          //    {
+ 343   2          //      if(((0x01<<(CurrentFloor+j-1))&PressFloorValue)> 0)
+ 344   2          //      {
+ 345   2          //         break; 
+ 346   2          //      }
+ 347   2          //    }
+ 348   2              
+ 349   2          //    if(j<(8-CurrentFloor+1))
+ 350   2          //    { 
+ 351   2          //      if(DesFloor>0) //Èç¹û´ËÊ±DesFloor²»Îª0 ´ú±íÉè±¸ÕýÔÚÔËÐÐÖÐ
+ 352   2          //      {
+ 353   2          //        if(DesFloor > CurrentFloor+j  )//¶ÔÓÚÏÂÐÐÀ´Ëµ
+ 354   2          //        {
+ 355   2          //          DesFloor = CurrentFloor+j;  //¸üÐÂDesFloor
+ 356   2          //        }
+ 357   2                  
+ 358   2          //      }
+ 359   2          //      else DesFloor = CurrentFloor+j; 
+ 360   2                
+ 361   2          //    LCD12864_SetWindow(0,0);//µ÷ÊÔÐÅÏ¢        
+C51 COMPILER V9.60.7.0   MAIN                                                              05/18/2023 20:32:04 PAGE 7   
 
- 362   4              LCD12864_WriteData(DesFloor+0x30);//µÚÒ»ÐÐÏÔÊ¾ µ÷ÊÔÐÅÏ¢ Ä¿µÄÂ¥²ãºÅ
- 363   4              
- 364   4              }
- 365   3              else   //if j==CurrentFloor µÄ´¦Àí·ÖÖ§    
- 366   3              {         
- 367   4               LiftDirection=0; //µçÌÝÍ£Ö¹   
- 368   4               DesFloor = 0 ; //Ä¿±êÂ¥²ã¸³Öµ0         
- 369   4              }
- 370   3      
- 371   3            }     
+ 362   2          //    LCD12864_WriteData(DesFloor+0x30);//µÚÒ»ÐÐÏÔÊ¾ µ÷ÊÔÐÅÏ¢ Ä¿µÄÂ¥²ãºÅ
+ 363   2              
+ 364   2          //    }
+ 365   2          //    else   //if j==CurrentFloor µÄ´¦Àí·ÖÖ§    
+ 366   2          //    {         
+ 367   2          //     LiftDirection=0; //µçÌÝÍ£Ö¹   
+ 368   2          //     DesFloor = 0 ; //Ä¿±êÂ¥²ã¸³Öµ0         
+ 369   2          //    }
+ 370   2      
+ 371   2          //  }     
  372   2            
  373   2            
- 374   2            //µçÌÝÔËÐÐµÄ¿ØÖÆ
- 375   2            if(DesFloor>0)  
- 376   2            {
- 377   3              if(DesFloor<CurrentFloor)
- 378   3              {
- 379   4                GoToFloor(CurrentFloor-1); //Ò»²ãÒ»²ã¿ØÖÆ
- 380   4              }
- 381   3              else if(DesFloor>CurrentFloor)
- 382   3              {
- 383   4                GoToFloor(CurrentFloor+1); //Ò»²ãÒ»²ã¿ØÖÆ       
- 384   4              }
- 385   3              else  //µ½´ï
- 386   3              {         
- 387   4                LCD12864_WriteCmd(0x94);  
- 388   4                LCD12864_WriteData('=');  //ÌáÊ¾µçÌÝÍ£
- 389   4                
- 390   4                //LiftDirection=0; //µçÌÝÍ£Ö¹   
- 391   4                DesFloor = 0 ; //Ä¿±êÂ¥²ã¸³Öµ0 
- 392   4      
- 393   4                beep=0;   //Éù¹âÌáÊ¾
- 394   4                led=0;
- 395   4                Delay100ms();
- 396   4                beep=1;   
- 397   4                led=1;      
- 398   4                relay=0;  //¿ªÃÅ¿ªµÆ
- 399   4                led=0;
- 400   4                
- 401   4                delay_ms(1000); //¿ªÃÅÎ¬³Ö1sÊ±¼ä
- 402   4                delay_ms(1000); //¿ªÃÅÎ¬³Ö1sÊ±¼ä
- 403   4                    
- 404   4                relay=1; //¹ØÃÅ¹ØµÆ
- 405   4                led=1;        
- 406   4              }
- 407   3            }
+ 374   2          //  //µçÌÝÔËÐÐµÄ¿ØÖÆ
+ 375   2          //  if(DesFloor>0)  
+ 376   2          //  {
+ 377   2          //    if(DesFloor<CurrentFloor)
+ 378   2          //    {
+ 379   2          //      GoToFloor(CurrentFloor-1); //Ò»²ãÒ»²ã¿ØÖÆ
+ 380   2          //    }
+ 381   2          //    else if(DesFloor>CurrentFloor)
+ 382   2          //    {
+ 383   2          //      GoToFloor(CurrentFloor+1); //Ò»²ãÒ»²ã¿ØÖÆ       
+ 384   2          //    }
+ 385   2          //    else  //µ½´ï
+ 386   2          //    {         
+ 387   2          //      LCD12864_WriteCmd(0x94);  
+ 388   2          //      LCD12864_WriteData('=');  //ÌáÊ¾µçÌÝÍ£
+ 389   2                
+ 390   2          //      //LiftDirection=0; //µçÌÝÍ£Ö¹   
+ 391   2          //      DesFloor = 0 ; //Ä¿±êÂ¥²ã¸³Öµ0 
+ 392   2      
+ 393   2          //      beep=0;   //Éù¹âÌáÊ¾
+ 394   2          //      led=0;
+ 395   2          //      Delay100ms();
+ 396   2          //      beep=1;   
+ 397   2          //      led=1;      
+ 398   2          //      relay=0;  //¿ªÃÅ¿ªµÆ
+ 399   2          //      led=0;
+ 400   2                
+ 401   2          //      delay_ms(1000); //¿ªÃÅÎ¬³Ö1sÊ±¼ä
+ 402   2          //      delay_ms(1000); //¿ªÃÅÎ¬³Ö1sÊ±¼ä
+ 403   2                    
+ 404   2          //      relay=1; //¹ØÃÅ¹ØµÆ
+ 405   2          //      led=1;        
+ 406   2          //    }
+ 407   2          //  }
  408   2      
- 409   2          //---------------------------------------------
+ 409   2          // //---------------------------------------------
  410   2          
  411   2      
  412   2        
@@ -439,15 +439,16 @@ line level    source
  414   1        
  415   1      }
 *** WARNING C280 IN LINE 217 OF main.c: 'n': unreferenced local variable
+*** WARNING C280 IN LINE 217 OF main.c: 'j': unreferenced local variable
  416          
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =   1236    ----
+   CODE SIZE        =    618    ----
    CONSTANT SIZE    =     41    ----
-   XDATA SIZE       =   ----    ----
-C51 COMPILER V9.59.0.0   MAIN                                                              04/11/2021 12:11:52 PAGE 8   
+C51 COMPILER V9.60.7.0   MAIN                                                              05/18/2023 20:32:04 PAGE 8   
 
+   XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----
    DATA SIZE        =      5       7
    IDATA SIZE       =   ----    ----
@@ -455,4 +456,4 @@ MODULE INFORMATION:   STATIC OVERLAYABLE
 END OF MODULE INFORMATION.
 
 
-C51 COMPILATION COMPLETE.  1 WARNING(S),  0 ERROR(S)
+C51 COMPILATION COMPLETE.  2 WARNING(S),  0 ERROR(S)

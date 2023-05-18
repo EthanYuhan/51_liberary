@@ -3,6 +3,7 @@
 
 //---包含头文件---//
 #include "stc15f2k60s2.h"
+#include "sys.h"
 
 //---重定义关键词---//
 #ifndef uchar
@@ -31,5 +32,7 @@ void LCD12864_ClearScreen(void);
 void LCD12864_SetWindow(uchar x, uchar y);
 void LCD12864_VerticalRoll(uchar N_Pixel); //卷动显示
 void Roll();
+void LCD12864_pixel(unsigned char x, unsigned char y, unsigned char attr);
+void LCD_line_h(unsigned char y, unsigned char attr);
 
 #endif

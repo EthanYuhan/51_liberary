@@ -20,9 +20,8 @@ u16 U16temp1,U16temp2;
 
 void Delay_10us(void)
 {
-	delay2us(5);
+	delay_us(10);
 }
-
 
 
 void  COM(void)

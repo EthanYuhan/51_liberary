@@ -7,7 +7,7 @@
 一个语句的时间大概是 0.8us
 */
 
-/*
+
 
 //2微秒	延时
 //此函数是以2us的倍数增加
@@ -19,9 +19,7 @@ void delay2us(u16 us)
   for(i=0;i<us;i++)
   for(m=0;m<3;m++);
  }
-
-  
-
+ 
 void delay_ms(u16 ms)
 {
  u16 m;
@@ -38,7 +36,7 @@ void delay_us(u16 us)
   for(m=0;m<1;m++);
  }
  
- */
+ 
  
  //4微秒	延时
 //此函数是以4us的倍数增加

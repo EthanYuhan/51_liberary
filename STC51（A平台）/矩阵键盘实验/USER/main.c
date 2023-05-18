@@ -1,4 +1,3 @@
-
 #include "sys.h"
 #include "lcd.h"
 #include "gui.h"
@@ -12,9 +11,7 @@
 
 u8	KeyCode;	//给用户使用的键码, 17~32有效
 
-
 u8 IO_KeyState, IO_KeyState1, IO_KeyHoldCnt;	//行列键盘变量
-
 
 /*****************************************************
 	行列键扫描程序
@@ -39,7 +36,7 @@ u8 code T_KeyTable[16] = {0,1,2,0,3,0,0,0,4,0,0,0,0,0,0,0};
 void IO_KeyDelay(void)
 {
 	u8 i;
-	i = 60;
+	i = 120;
 	while(--i)	;
 }
 
@@ -83,16 +80,12 @@ void	IO_KeyScan(void)
 				{
 					KeyCode = (u8)(((j - 1) * 4 )+ (T_KeyTable[IO_KeyState & 0x0f]) );	//计算键码，17~32  + 16
 				}
-					
 			}
 		}
 		else	IO_KeyHoldCnt = 0;
 	}
 	P7 = 0xff;
 }
-
-
-
 
 
 

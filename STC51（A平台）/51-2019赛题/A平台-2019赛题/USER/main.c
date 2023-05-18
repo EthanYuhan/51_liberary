@@ -258,155 +258,155 @@ void main(void)  //主函数
 			for (i=0;i<16;i++)    //直接检测16次按键
 			{
 				IO_KeyScan();		         //按键扫描 检测按键 	
-		    KeySetLiftUpDownValue(); //更新PressFloorValue并显示被按下的楼层号信息		xo显示
+		   		KeySetLiftUpDownValue(); //更新PressFloorValue并显示被按下的楼层号信息		xo显示
 			}	
 		
-		if((GoTo5FloorFlag==1)&&(CurrentFloor!=5)&&((LiftDirection==0)) ) //当电梯空闲时运行到5楼
-		{
-			if(CurrentFloor>5)
-			{
-				LiftDirection=2; //电梯下行
-			}
-			else
-			{
-				LiftDirection=1; //电梯上行
-			}
+		// if((GoTo5FloorFlag==1)&&(CurrentFloor!=5)&&((LiftDirection==0)) ) //当电梯空闲时运行到5楼
+		// {
+		// 	if(CurrentFloor>5)
+		// 	{
+		// 		LiftDirection=2; //电梯下行
+		// 	}
+		// 	else
+		// 	{
+		// 		LiftDirection=1; //电梯上行
+		// 	}
 			
-			GoTo5FloorFlag = 0; 
-			DesFloor = 5 ; 				//目标楼层赋值5	
-			LCD12864_SetWindow(0,0);//调试信息				
-			LCD12864_WriteData(DesFloor+0x30);//第一行显示 调试信息 目的楼层号				
-			GoToFloor(DesFloor);  //电梯运行到5楼
+		// 	GoTo5FloorFlag = 0; 
+		// 	DesFloor = 5 ; 				//目标楼层赋值5	
+		// 	LCD12864_SetWindow(0,0);//调试信息				
+		// 	LCD12864_WriteData(DesFloor+0x30);//第一行显示 调试信息 目的楼层号				
+		// 	GoToFloor(DesFloor);  //电梯运行到5楼
 			
-		}		
+		// }		
 		
 		
-		//-------------------电梯控制逻辑处理部分-----------------------
+		// //-------------------电梯控制逻辑处理部分-----------------------
 		
-		if((PressFloorValue>0)||(Floor9Value>0) )  //楼层按键有被按下    LiftDirection赋值策略     
-		{			
+		// if((PressFloorValue>0)||(Floor9Value>0) )  //楼层按键有被按下    LiftDirection赋值策略     
+		// {			
 			
-			if((LiftDirection==0)&&(PressFloorValue<(0x01<<(CurrentFloor-1)))&&(PressFloorValue>0))    //当前停止状态 当前楼层数以下的楼层有被按下 优先下行  0001 0000
-			{
-			LiftDirection = 2;  //下行
-			LCD12864_SetWindow(0,0);//调试信息
-			LCD12864_WriteData('D');	
-			}
-			else if((LiftDirection==0)&&(PressFloorValue>(0x01<<(CurrentFloor-1)))&&(PressFloorValue>0))
-			{
-			LiftDirection = 1;  //上行
-			LCD12864_SetWindow(0,0);//调试信息
-			LCD12864_WriteData('U');
-			}
+		// 	if((LiftDirection==0)&&(PressFloorValue<(0x01<<(CurrentFloor-1)))&&(PressFloorValue>0))    //当前停止状态 当前楼层数以下的楼层有被按下 优先下行  0001 0000
+		// 	{
+		// 	LiftDirection = 2;  //下行
+		// 	LCD12864_SetWindow(0,0);//调试信息
+		// 	LCD12864_WriteData('D');	
+		// 	}
+		// 	else if((LiftDirection==0)&&(PressFloorValue>(0x01<<(CurrentFloor-1)))&&(PressFloorValue>0))
+		// 	{
+		// 	LiftDirection = 1;  //上行
+		// 	LCD12864_SetWindow(0,0);//调试信息
+		// 	LCD12864_WriteData('U');
+		// 	}
 				
-		}		
+		// }		
 		
-			if((LiftDirection==2)&&(PressFloorValue>0) ) //当前下行状态    DesFloor赋值策略
-			{	
-				for(j=1;j<CurrentFloor;j++)
-				//for(j=CurrentFloor;j>0;j--)
-				{
-					if(((0x01<<(CurrentFloor-j-1))&PressFloorValue)> 0)
-					{
-						 break; 
-					}
-				}
+		// 	if((LiftDirection==2)&&(PressFloorValue>0) ) //当前下行状态    DesFloor赋值策略
+		// 	{	
+		// 		for(j=1;j<CurrentFloor;j++)
+		// 		//for(j=CurrentFloor;j>0;j--)
+		// 		{
+		// 			if(((0x01<<(CurrentFloor-j-1))&PressFloorValue)> 0)
+		// 			{
+		// 				 break; 
+		// 			}
+		// 		}
        			
-				if(j<CurrentFloor)
-				{	
-					if(DesFloor>0) //如果此时DesFloor不为0 代表设备正在运行中
-					{
-						if(DesFloor < CurrentFloor-j	)//对于下行来说
-						{
-							DesFloor = CurrentFloor-j;  //更新DesFloor
-						}
+		// 		if(j<CurrentFloor)
+		// 		{	
+		// 			if(DesFloor>0) //如果此时DesFloor不为0 代表设备正在运行中
+		// 			{
+		// 				if(DesFloor < CurrentFloor-j	)//对于下行来说
+		// 				{
+		// 					DesFloor = CurrentFloor-j;  //更新DesFloor
+		// 				}
 						
-					}
-					else DesFloor = CurrentFloor-j;	
+		// 			}
+		// 			else DesFloor = CurrentFloor-j;	
 					
-				LCD12864_SetWindow(0,0);//调试信息				
-			  LCD12864_WriteData(DesFloor+0x30);//第一行显示 调试信息 目的楼层号
+		// 		LCD12864_SetWindow(0,0);//调试信息				
+		// 	  LCD12864_WriteData(DesFloor+0x30);//第一行显示 调试信息 目的楼层号
 				
-				//GoToFloor(DesFloor);   //拿出去 单独一层一层楼控制
-				}
-				else   //if j==CurrentFloor 的处理分支		
-				{					
-				 LiftDirection=0; //电梯停止 
-				 DesFloor = 0 ; //目标楼层赋值0 				
-				}
-			}			
-			else if ((LiftDirection==1)&&(PressFloorValue>0))  //当前上行状态  DesFloor赋值策略
-			{
-				for(j=0;j<(8-CurrentFloor+1);j++)
-				//for(j=CurrentFloor-1;j>0;j--)
-				{
-					if(((0x01<<(CurrentFloor+j-1))&PressFloorValue)> 0)
-					{
-						 break; 
-					}
-				}
+		// 		//GoToFloor(DesFloor);   //拿出去 单独一层一层楼控制
+		// 		}
+		// 		else   //if j==CurrentFloor 的处理分支		
+		// 		{					
+		// 		 LiftDirection=0; //电梯停止 
+		// 		 DesFloor = 0 ; //目标楼层赋值0 				
+		// 		}
+		// 	}			
+		// 	else if ((LiftDirection==1)&&(PressFloorValue>0))  //当前上行状态  DesFloor赋值策略
+		// 	{
+		// 		for(j=0;j<(8-CurrentFloor+1);j++)
+		// 		//for(j=CurrentFloor-1;j>0;j--)
+		// 		{
+		// 			if(((0x01<<(CurrentFloor+j-1))&PressFloorValue)> 0)
+		// 			{
+		// 				 break; 
+		// 			}
+		// 		}
 				
-				if(j<(8-CurrentFloor+1))
-				{	
-					if(DesFloor>0) //如果此时DesFloor不为0 代表设备正在运行中
-					{
-						if(DesFloor > CurrentFloor+j	)//对于下行来说
-						{
-							DesFloor = CurrentFloor+j;  //更新DesFloor
-						}
+		// 		if(j<(8-CurrentFloor+1))
+		// 		{	
+		// 			if(DesFloor>0) //如果此时DesFloor不为0 代表设备正在运行中
+		// 			{
+		// 				if(DesFloor > CurrentFloor+j	)//对于下行来说
+		// 				{
+		// 					DesFloor = CurrentFloor+j;  //更新DesFloor
+		// 				}
 						
-					}
-					else DesFloor = CurrentFloor+j;	
+		// 			}
+		// 			else DesFloor = CurrentFloor+j;	
 					
-				LCD12864_SetWindow(0,0);//调试信息				
-			  LCD12864_WriteData(DesFloor+0x30);//第一行显示 调试信息 目的楼层号
+		// 		LCD12864_SetWindow(0,0);//调试信息				
+		// 	  LCD12864_WriteData(DesFloor+0x30);//第一行显示 调试信息 目的楼层号
 				
-				}
-				else   //if j==CurrentFloor 的处理分支		
-				{					
-				 LiftDirection=0; //电梯停止   
-				 DesFloor = 0 ; //目标楼层赋值0 				
-				}
+		// 		}
+		// 		else   //if j==CurrentFloor 的处理分支		
+		// 		{					
+		// 		 LiftDirection=0; //电梯停止   
+		// 		 DesFloor = 0 ; //目标楼层赋值0 				
+		// 		}
 
-			}			
+		// 	}			
 			
 			
-			//电梯运行的控制
-			if(DesFloor>0)  
-			{
-				if(DesFloor<CurrentFloor)
-				{
-					GoToFloor(CurrentFloor-1); //一层一层控制
-				}
-				else if(DesFloor>CurrentFloor)
-				{
-					GoToFloor(CurrentFloor+1); //一层一层控制				
-				}
-				else  //到达
-				{					
-					LCD12864_WriteCmd(0x94);  
-					LCD12864_WriteData('=');  //提示电梯停
+		// 	//电梯运行的控制
+		// 	if(DesFloor>0)  
+		// 	{
+		// 		if(DesFloor<CurrentFloor)
+		// 		{
+		// 			GoToFloor(CurrentFloor-1); //一层一层控制
+		// 		}
+		// 		else if(DesFloor>CurrentFloor)
+		// 		{
+		// 			GoToFloor(CurrentFloor+1); //一层一层控制				
+		// 		}
+		// 		else  //到达
+		// 		{					
+		// 			LCD12864_WriteCmd(0x94);  
+		// 			LCD12864_WriteData('=');  //提示电梯停
 					
-					//LiftDirection=0; //电梯停止   
-					DesFloor = 0 ; //目标楼层赋值0 
+		// 			//LiftDirection=0; //电梯停止   
+		// 			DesFloor = 0 ; //目标楼层赋值0 
 
-					beep=0;   //声光提示
-					led=0;
-					Delay100ms();
-					beep=1;   
-					led=1;			
-					relay=0;  //开门开灯
-					led=0;
+		// 			beep=0;   //声光提示
+		// 			led=0;
+		// 			Delay100ms();
+		// 			beep=1;   
+		// 			led=1;			
+		// 			relay=0;  //开门开灯
+		// 			led=0;
 					
-					delay_ms(1000); //开门维持1s时间
-					delay_ms(1000); //开门维持1s时间
+		// 			delay_ms(1000); //开门维持1s时间
+		// 			delay_ms(1000); //开门维持1s时间
 							
-					relay=1; //关门关灯
-					led=1;				
-				}
-			}
+		// 			relay=1; //关门关灯
+		// 			led=1;				
+		// 		}
+		// 	}
 
-		//---------------------------------------------
+		// //---------------------------------------------
 		
 
 	
