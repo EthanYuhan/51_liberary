@@ -53,29 +53,25 @@ void main(void)
 	Init_SPI(); //SPI初始化 
 	LCD_Clear(WHITE);//清屏白底		
 
-    SD_Init();			      //SD卡初始化
-    //pf_mount(&fatfs);	         //初始化petit FATFS文件系统  并提取tf卡相应数据
+  SD_Init();			      //SD卡初始化
+  pf_mount(&fatfs);	         //初始化petit FATFS文件系统  并提取tf卡相应数据
 	
 	
 	res=pf_mount(&fatfs);	
 	
 
 	
-if(res == FR_OK) Show_Str(0, 146, BLACK,WHITE, "FAFS  ok",16,1);
-else if(res == FR_DISK_ERR) Show_Str(0, 146, RED,WHITE, "FR_DISK_ERR  err",16,1);
-else if(res == FR_NOT_READY)Show_Str(0, 146, RED,WHITE, "FR_NOT_READY  err",16,1);
-else if(res == FR_NO_FILE) Show_Str(0, 146, RED,WHITE, "FR_NO_FILE  err",16,1);
-else if(res == FR_NOT_OPENED) Show_Str(0, 146, RED,WHITE, "FR_NOT_OPENED  err",16,1);
-else if(res == FR_NOT_ENABLED) Show_Str(0, 146, RED,WHITE, "FR_NOT_ENABLED  err",16,1);
-else if(res == FR_NO_FILESYSTEM) Show_Str(0, 146, RED,WHITE, "FR_NO_FILESYSTEM  err",16,1);
+  if(res == FR_OK) Show_Str(0, 146, BLACK,WHITE, "FAFS  ok",16,1);
+    else if(res == FR_DISK_ERR) Show_Str(0, 146, RED,WHITE, "FR_DISK_ERR  err",16,1);
+    else if(res == FR_NOT_READY)Show_Str(0, 146, RED,WHITE, "FR_NOT_READY  err",16,1);
+		else if(res == FR_NO_FILE) Show_Str(0, 146, RED,WHITE, "FR_NO_FILE  err",16,1);
+		else if(res == FR_NOT_OPENED) Show_Str(0, 146, RED,WHITE, "FR_NOT_OPENED  err",16,1);
+		else if(res == FR_NOT_ENABLED) Show_Str(0, 146, RED,WHITE, "FR_NOT_ENABLED  err",16,1);
+		else if(res == FR_NO_FILESYSTEM) Show_Str(0, 146, RED,WHITE, "FR_NO_FILESYSTEM  err",16,1);
 
 
 	while(1);			 
 	
 	
 }
-
-
-
-
 

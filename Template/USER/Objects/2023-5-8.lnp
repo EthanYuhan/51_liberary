@@ -1,9 +1,0 @@
-".\Objects\main.obj",
-".\Objects\ds1302.obj",
-".\Objects\key.obj",
-".\Objects\timer.obj",
-".\Objects\ad.obj",
-".\Objects\lcd12864.obj",
-".\Objects\sys.obj" 
-TO ".\Objects\2023-5-8" 
-PRINT(".\Listings\2023-5-8.m51")

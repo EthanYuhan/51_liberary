@@ -1,9 +1,0 @@
-".\Objects\main.obj",
-".\Objects\ad.obj",
-".\Objects\ds1302.obj",
-".\Objects\key.obj",
-".\Objects\lcd12864.obj",
-".\Objects\timer.obj",
-".\Objects\sys.obj" 
-TO ".\Objects\5-10" 
-PRINT(".\Listings\5-10.m51") RAMSIZE(256) 
