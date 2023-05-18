@@ -1,0 +1,109 @@
+C51 COMPILER V9.60.7.0   SYS                                                               05/18/2023 17:05:14 PAGE 1   
+
+
+C51 COMPILER V9.60.7.0, COMPILATION OF MODULE SYS
+OBJECT MODULE PLACED IN ..\OBJ\sys.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE ..\SYSTEM\sys\sys.c OPTIMIZE(8,SPEED) BROWSE INCDIR(..\USER;..\README;..
+                    -\HARDWARE\lcd12864;..\SYSTEM\delay;..\SYSTEM\sys;..\HARDWARE\key;..\HARDWARE\motor;..\HARDWARE\timer;..\HARDWARE\ad;..\H
+                    -ARDWARE\ds1302;..\HARDWARE\interrupt;..\HARDWARE\dht11) DEBUG OBJECTEXTEND PRINT(.\sys.lst) TABS(2) OBJECT(..\OBJ\sys.ob
+                    -j)
+
+line level    source
+
+   1          
+   2          #include "sys.h"
+   3          
+   4          /*
+   5          24MHz主频下 
+   6          在示波器下看
+   7          一个语句的时间大概是 0.8us
+   8          */
+   9          
+  10          /*
+  11          
+  12          //2微秒 延时
+  13          //此函数是以2us的倍数增加
+  14          //t  2us的倍数
+  15          void delay2us(u16 us)
+  16           {
+  17            u16 i;
+  18            u8 m;
+  19            for(i=0;i<us;i++)
+  20            for(m=0;m<3;m++);
+  21           }
+  22          
+  23            
+  24          
+  25          void delay_ms(u16 ms)
+  26          {
+  27           u16 m;
+  28           for(m=0;m<ms;m++)
+  29           delay4us(250);
+  30          } 
+  31          
+  32          //为兼容原程序
+  33          void delay_us(u16 us)
+  34           {
+  35            u16 i;
+  36            u8 m;
+  37            for(i=0;i<us;i++)
+  38            for(m=0;m<1;m++);
+  39           }
+  40           
+  41           */
+  42           
+  43           //4微秒  延时
+  44          //此函数是以4us的倍数增加
+  45          //t  4us的倍数
+  46          void delay4us(u16 us)
+  47           {
+  48   1        u16 i;
+  49   1        u8 m;
+  50   1        for(i=0;i<us;i++)
+  51   1        for(m=0;m<5;m++);
+  52   1       }
+C51 COMPILER V9.60.7.0   SYS                                                               05/18/2023 17:05:14 PAGE 2   
+
+  53          
+  54           
+  55           //1毫秒 延时
+  56          //ms 1ms的倍数
+  57          void delay1ms(u16 ms)
+  58          {
+  59   1       u16 m;
+  60   1       for(m=0;m<ms;m++)
+  61   1       delay4us(250);
+  62   1      } 
+  63          
+  64           
+  65          void Delay100ms(void) //@24.000MHz   
+  66          {
+  67   1        unsigned char i, j, k;
+  68   1      
+  69   1        _nop_();
+  70   1        _nop_();
+  71   1        i = 10;
+  72   1        j = 31;
+  73   1        k = 147;
+  74   1        do
+  75   1        {
+  76   2          do
+  77   2          {
+  78   3            while (--k);
+  79   3          } while (--j);
+  80   2        } while (--i);
+  81   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     68    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----       2
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

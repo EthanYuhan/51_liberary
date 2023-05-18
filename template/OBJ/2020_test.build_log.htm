@@ -1,0 +1,48 @@
+<html>
+<body>
+<pre>
+<h1>µVision Build Log</h1>
+<h2>Tool Versions:</h2>
+IDE-Version: ¦ÌVision V5.38.0.0
+Copyright (C) 2022 ARM Ltd and ARM Germany GmbH. All rights reserved.
+License Information: 1 1, 1, LIC=MPYH9-4HLWT-F67Q4-FX6QN-XRR75-GJXTY
+ 
+Tool Versions:
+Toolchain:       PK51 Prof. Developers Kit  Version: 9.60.7.0
+Toolchain Path:  C:\Keil_v5\C51\BIN
+C Compiler:      C51.exe V9.60.7.0
+Assembler:       A51.exe V8.2.7.0
+Linker/Locator:  BL51.exe V6.22.4.0
+Library Manager: LIB51.exe V4.30.1.0
+Hex Converter:   OH51.exe V2.7.0.0
+CPU DLL:         S8051.DLL V3.125.1.0
+Dialog DLL:      DP51.DLL V2.69.0.0 
+<h2>Project:</h2>
+C:\Users\lingj\Desktop\51-learning\51_library\template\USER\TEST.uvproj
+Project File Date:  05/18/2023
+
+<h2>Output:</h2>
+Rebuild target 'TEST'
+compiling main.c...
+compiling sys.c...
+compiling key.c...
+compiling lcd12864.c...
+compiling timer.c...
+compiling ad.c...
+compiling ds1302.c...
+compiling dht11.c...
+linking...
+*** WARNING L1: UNRESOLVED EXTERNAL SYMBOL
+    SYMBOL:  _DELAY2US
+    MODULE:  ..\OBJ\dht11.obj (DHT11)
+*** WARNING L2: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  _DELAY2US
+    MODULE:  ..\OBJ\dht11.obj (DHT11)
+    ADDRESS: 0E63H
+Program Size: data=77.0 xdata=0 code=3683
+creating hex file from "..\OBJ\2020_test"...
+"..\OBJ\2020_test" - 0 Error(s), 2 Warning(s).
+Build Time Elapsed:  00:00:02
+</pre>
+</body>
+</html>

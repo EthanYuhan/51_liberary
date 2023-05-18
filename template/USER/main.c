@@ -8,6 +8,7 @@
 #include "timer.h"
 #include "ad.h"
 #include "ds1302.h"
+#include "dht11.h"
 
 
 
@@ -98,6 +99,8 @@ void main(void)  //主函数
 {	
 	u8 i;	
 	u8 temp;
+	
+	UpdateTemp();//获取温湿度
 
 	IO_init();				 //IO口初始化		
     LCD12864_Init();         //12864液晶初始化	

@@ -324,7 +324,7 @@
               <MiscControls></MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>..\USER;..\README;..\HARDWARE\lcd12864;..\SYSTEM\delay;..\SYSTEM\sys;..\HARDWARE\key;..\HARDWARE\motor;..\HARDWARE\timer;..\HARDWARE\ad;..\HARDWARE\ds1302;..\HARDWARE\interrupt</IncludePath>
+              <IncludePath>..\USER;..\README;..\HARDWARE\lcd12864;..\SYSTEM\delay;..\SYSTEM\sys;..\HARDWARE\key;..\HARDWARE\motor;..\HARDWARE\timer;..\HARDWARE\ad;..\HARDWARE\ds1302;..\HARDWARE\interrupt;..\HARDWARE\dht11</IncludePath>
             </VariousControls>
           </C51>
           <Ax51>
@@ -420,6 +420,11 @@
               <FileName>ds1302.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\HARDWARE\ds1302\ds1302.c</FilePath>
+            </File>
+            <File>
+              <FileName>dht11.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\HARDWARE\dht11\dht11.c</FilePath>
             </File>
           </Files>
         </Group>
