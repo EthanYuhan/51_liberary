@@ -10,8 +10,6 @@
 #include "ds1302.h"
 #include "dht11.h"
 
-
-
 u8 code CharCodeLine1[]="CZCJJQ";       //第一行显示字符
 u8 code CharCodeLine2[]="0302";         //第二行显示字符
 u8 code MileValue[]="mile：       km";  //显示行驶里程
@@ -29,15 +27,12 @@ u8  MoterSpeed =8;    //通过定时器2控制步进电机转速
 u8  AdcFlag = 0 ;     //adc采样标志
 u16 InterruptCount = 0 ;  //码盘中断计数
 
-
 extern u8 KeyCode;      //按键键值
 extern u16 TimerCount ; //定时器计数
 extern u8 PulseNum;     //脉冲计数
 extern u16 WaiteTimeCount; //静止状态等待时间计数
 
-
-void IO_init(void)  //IO口初始化
-{
+void IO_init(void){  //IO口初始化
 	//IO配置为准双向IO口 
 	P0M0 = 0X00;	P0M1 = 0X00;  
 	P1M0 = 0X00;	P1M1 = 0X00;
@@ -61,42 +56,7 @@ void IO_init(void)  //IO口初始化
 }
 
 
-void Roll(void)  //卷动显示两行字
-{	
-	uchar i;	
-	
-	//为显示上半屏第一行字符做准备，地址0xa0  
-	//详细参考文章：https://wenku.baidu.com/view/375ec764cc22bcd127ff0c9a.html	
-	LCD12864_WriteCmd(0xa0);	
-	while(CharCodeLine1[i]!='\0')
-	{
-		LCD12864_WriteData(CharCodeLine1[i]);
-		i++;
-	}
-	i=0;
-	//为显示上半屏第二行字符做准备，地址0xb0  	
-	LCD12864_WriteCmd(0xb0);    
-	while(CharCodeLine2[i]!='\0')
-	{
-		LCD12864_WriteData(CharCodeLine2[i]);
-		i++;
-	}
-	
-		for(i=0;i<33;i++)    //上半屏卷动显示
-	{
-			LCD12864_VerticalRoll(i);
-			Delay100ms();	 //每行高16个像素，两行32像素，0.1秒卷动1像素，两行字显示结束共需要3.2秒
-	}
-	LCD12864_WriteCmd(0x30); //恢复基本指令集
-}
-
-
-
-
-
-
-void main(void)  //主函数
-{	
+void main(void){  //主函数
 	u8 i;	
 	u8 temp;
 	
@@ -111,22 +71,19 @@ void main(void)  //主函数
 	
 	LCD12864_WriteCmd(0x01); //清除LCD12864的显示内容	
 	LCD12864_SetWindow(0,0); //第1行显示行驶里程
-	while(MileValue[i]!='\0')
-	{
+	while(MileValue[i]!='\0'){
 		LCD12864_WriteData(MileValue[i]);
 		i++;
 	}
 	i=0;	
 	LCD12864_SetWindow(1,0); //第2行显示应收取费用
-	while(CostValue[i]!='\0')  
-	{
+	while(CostValue[i]!='\0'){
 		LCD12864_WriteData(CostValue[i]);
 		i++;
 	}
 	i=0;
   	
-	while(1)  //主循环
-	{	
+	while(1){  //主循环
 		IO_KeyScan();   //按键扫描 检测按键 
 		
 		ds1302_scan();  //RTC时间显示 时分

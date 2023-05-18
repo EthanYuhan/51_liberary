@@ -13,8 +13,7 @@
    
 */
 
-void IO_init(void)
-{
+void IO_init(void){
 	P0M0 = 0X00;	P0M1 = 0X00;
 
 	P1M0 = 0X00;  P1M1 = 0X00;
@@ -55,15 +54,10 @@ void main(void)
 	{	
 
 		RH();
-		
-		
 	LCD_ShowNum(136,56,U8T_data_H,2,16);
 	LCD_ShowNum(154,56,U8T_data_L,2,16);
-		
 	LCD_ShowNum(136,96,U8RH_data_H,2,16);
 	LCD_ShowNum(154,96,U8RH_data_L,2,16);
-		
-		
 	delay_ms(2000); //—” ±¡Ω√Î	
 	}
 	

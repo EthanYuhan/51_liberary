@@ -1,5 +1,34 @@
 #include"lcd12864.h"
 
+extern uchar code CharCodeLine1[];       //第一行显示字符
+extern uchar code CharCodeLine2[];         //第二行显示字符
+
+void Roll(void){  //卷动显示两行字	
+	uchar i;	
+	//为显示上半屏第一行字符做准备，地址0xa0  
+	//详细参考文章：https://wenku.baidu.com/view/375ec764cc22bcd127ff0c9a.html	
+	LCD12864_WriteCmd(0xa0);	
+	while(CharCodeLine1[i]!='\0'){
+		LCD12864_WriteData(CharCodeLine1[i]);
+		i++;
+	}
+	i=0;
+	//为显示上半屏第二行字符做准备，地址0xb0  	
+	LCD12864_WriteCmd(0xb0);    
+	while(CharCodeLine2[i]!='\0')
+	{
+		LCD12864_WriteData(CharCodeLine2[i]);
+		i++;
+	}
+	
+		for(i=0;i<33;i++)    //上半屏卷动显示
+	{
+			LCD12864_VerticalRoll(i);
+			Delay100ms();	 //每行高16个像素，两行32像素，0.1秒卷动1像素，两行字显示结束共需要3.2秒
+	}
+	LCD12864_WriteCmd(0x30); //恢复基本指令集
+}
+
 /*******************************************************************************
 * 函 数 名         : LCD12864_Delay1ms
 * 函数功能		   : 延时1MS
