@@ -3,7 +3,7 @@
 extern uchar code CharCodeLine1[];       //第一行显示字符
 extern uchar code CharCodeLine2[];         //第二行显示字符
 
-void Roll(void){  //卷动显示两行字	
+void LCD12864_Roll(void){  //卷动显示两行字	
 	uchar i;	
 	//为显示上半屏第一行字符做准备，地址0xa0  
 	//详细参考文章：https://wenku.baidu.com/view/375ec764cc22bcd127ff0c9a.html	
@@ -48,6 +48,8 @@ void LCD12864_Delay1ms(uint c)
 	}
 }
 
+
+
 /*******************************************************************************
 * 函 数 名         : LCD12864_WriteCmd
 * 函数功能		   : 写命令
@@ -59,11 +61,15 @@ void LCD12864_WriteCmd(uchar cmd)
 {
 	uchar i;
 	i = 0;
+
 	LCD12864_Delay1ms(20); //等待忙完
+	
 	LCD12864_RS = 0;     //选择命令
 	LCD12864_RW = 0;     //选择写入
 	LCD12864_EN = 0;     //初始化使能端
+
 	LCD12864_DATAPORT = cmd;   //放置数据
+
 	LCD12864_EN = 1;		   //写时序
 	LCD12864_Delay1ms(5);
 	LCD12864_EN = 0;    					
@@ -80,6 +86,7 @@ void LCD12864_WriteData(uchar dat)
 {
 	uchar i;
 	i = 0;
+
 	LCD12864_Delay1ms(20);  //等待忙完
 
 	LCD12864_RS = 1;     //选择数据
@@ -99,6 +106,7 @@ void LCD12864_WriteData(uchar dat)
 * 输    入         : 无
 * 输    出         : 读取到的8位数据
 *******************************************************************************/
+
 uchar LCD12864_ReadData(void)
 {
 	uchar i, readValue;
@@ -120,10 +128,9 @@ uchar LCD12864_ReadData(void)
 	return readValue;
 }
 
-
 /*******************************************************************************
 * 函 数 名         : LCD12864_Init
-* 函数功能		       : 初始化LCD12864
+* 函数功能		   : 初始化LCD12864
 * 输    入         : 无
 * 输    出         : 无
 *******************************************************************************/
@@ -138,7 +145,7 @@ void LCD12864_Init()
 
 /*******************************************************************************
 * 函 数 名         : LCD12864_ClearScreen
-* 函数功能		   :    在画图模式下，LCD12864的01H命令不能清屏，所以要自己写一个清
+* 函数功能		   : 在画图模式下，LCD12864的01H命令不能清屏，所以要自己写一个清
 *                  * 屏函数
 * 输    入         : 无
 * 输    出         : 无
@@ -156,7 +163,7 @@ void LCD12864_ClearScreen(void)
 		LCD12864_WriteCmd(0x80);		  //再写入横坐标X的值
 		for(j=0;j<32;j++)		  //横坐标有16位，每位写入两个字节的的数据，也
 		{						  //就写入32次以为当写入两个字节之后横坐标会自
-			LCD12864_WriteData(0xFF);	  //动加1，所以就不用再次写入地址了。
+			LCD12864_WriteData(0x00);	  //动加1，所以就不用再次写入地址了。
 		}
 	}
 
@@ -216,60 +223,3 @@ void LCD12864_VerticalRoll(uchar N_Pixel)
     LCD12864_WriteCmd(0x40|N_Pixel);//上卷N行（像素）
 }
 
-/*--------------------------------------------------------------*/
-//液晶定位写入数据一个字节
-//液晶规划:
-//x: 0 - 7	(页)
-//y: 0 -127	(列)
-void LCD_write_dat_pos(unsigned char x, unsigned char y, unsigned char dat)
-{
-	LCD12864_SetWindow(x, y);
-	LCD12864_WriteCmd(dat);
-}
-
-/*--------------------------------------------------------------*/
-//液晶定位读出数据一个字节
-//液晶规划:
-//x: 0 - 7	(页)
-//y: 0 -127	(列)
-unsigned char LCD_read_dat_pos(unsigned char x, unsigned char y)
-{
-	unsigned char read_dat;
-
-	LCD12864_SetWindow(x, y);
-	read_dat = LCD12864_ReadData();		//dummy读
-	read_dat = LCD12864_ReadData();		//数据有效
-
-	return (read_dat);	
-}
-
-/*--------------------------------------------------------------*/
-//画点函数
-//x:	0 - 127		横坐标
-//y:	0 - 63		列坐标	
-//attr:		=1,		画点	
-//			=0,		消点
-void LCD12864_pixel(unsigned char x, unsigned char y, unsigned char attr)
-{
-	unsigned char pixel_dat, temp_dat, yy;
-	
-	yy = y >> 3;						//划分到页
-	pixel_dat = LCD_read_dat_pos(yy, x);//读出数据
-	temp_dat = 0x01 << (y & 0x07);		//页中的点
-	if(attr) pixel_dat |= temp_dat;		//画点
-	else	 pixel_dat &= ~temp_dat;	//消点
-	LCD_write_dat_pos(yy, x, pixel_dat);//写入组合数据
-}
-
-
-/*--------------------------------------------------------------*/
-//画横线
-//y:	0 - 63		列坐标	
-//attr:		=1,		画线
-//			=0,		消线
-void LCD_line_h(unsigned char y, unsigned char attr)
-{
-	unsigned char i;
-
-	for(i = 0; i < 128; i++) LCD12864_pixel(i, y, attr);
-}
