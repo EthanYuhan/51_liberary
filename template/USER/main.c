@@ -9,8 +9,8 @@
 #include "ad.h"
 #include "ds1302.h"
 #include "dht11.h"
-#include "motor.h"
-#include "mpu6050.h"
+//#include "motor.h"
+//#include "mpu6050.h"
 
 u8 code CharCodeLine1[]="CZCJJQ";       //第一行显示字符
 u8 code CharCodeLine2[]="0302";         //第二行显示字符
@@ -33,7 +33,7 @@ void IO_init(void){  //IO口初始化
 	P2M1 &= ~(1<<0),P2M0 |=  (1<<0); 
 	P1M1 &= ~(1<<3),P1M0 |=  (1<<3);//步进电机
 	//P1M1 &= ~(1<<4),P1M0 |=  (1<<4); 
-	P1M1 &= ~(1<<1),P1M0 |=  (1<<1); 
+	//P1M1 &= ~(1<<1),P1M0 |=  (1<<1); 
 	P1M1 &= ~(1<<2),P1M0 |=  (1<<2); 
 	//P5M1 &= ~(1<<5),P5M0 |=  (1<<5);//蜂鸣器
 	//P5M1 &= ~(1<<2),P5M0 |=  (1<<2);//继电器
@@ -46,15 +46,11 @@ void main(void){  //主函数
 	InitMPU6050();
 	//LCD12864_ClearScreen();	
 	//LCD12864_Roll();
-
-	
 	
 	delay_ms(1000);
 	
 	while(1){  //主循环
-		print_n(0,0,GetData(ACCEL_XOUT_H),5);
-		print_n(1,0,GetData(ACCEL_YOUT_H),5);
-		print_n(2,0,GetData(ACCEL_ZOUT_H),5);
+		show_dht11();
 		delay_ms(200);
 		
 	}

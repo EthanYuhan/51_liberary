@@ -9,6 +9,6 @@ extern u8 U8T_data_H,U8T_data_L,U8RH_data_H,U8RH_data_L,U8checkdata;
 
 void  COM(void);
 void UpdateTemp(void);
-
+void show_dht11();
 
 #endif

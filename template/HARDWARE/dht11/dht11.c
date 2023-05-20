@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include "string.h"
 #include  "sys.h"
+#include "lcd12864.h"
 
 
 sbit  DHT_IO  = P1^1 ;
@@ -69,9 +70,9 @@ void  COM(void)
 void UpdateTemp(void)
 	{
 	  //主机拉低18ms 
-     DHT_IO=0;
-	   delay1ms(18);
-	   DHT_IO=1;
+    	DHT_IO=0;
+		delay1ms(18);
+		DHT_IO=1;
 	 //总线由上拉电阻拉高 主机延时20us
 	   Delay_10us();
 	   Delay_10us();
@@ -113,4 +114,11 @@ void UpdateTemp(void)
 	   }//fi
 	   }//fi
 
-	}
+}
+
+void show_dht11(){
+	UpdateTemp();
+	print_n(0,0,U8RH_data_H,2);
+	print(".");
+	print_n(0,3,U8RH_data_L,2);
+}

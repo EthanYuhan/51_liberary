@@ -1,6 +1,41 @@
 #include "motor.h"
+#include "sys.h"
 
+//         D C B A
+//   7 6 5 4 3 2 1 0    P1口
+//   0 0 0 1 0 0 0 0
+uchar phasecw[4] ={0x10,0x08,0x04,0x02};//正转 电机导通相序 D-C-B-A
+uchar phaseccw[4]={0x02,0x04,0x08,0x10};//反转 电机导通相序 A-B-C-D
+uchar speed;
 	
+//逆时针转动
+void MotorCCW(void)
+{
+ uchar i;
+ for(i=0;i<4;i++)
+  {
+   MotorData=phaseccw[i];
+   delay_ms(speed);//转速调节
+  }
+}
+
+//顺时针转动
+void MotorCW(void)
+{
+ uchar i;
+ for(i=0;i<4;i++)
+  {
+   MotorData=phasecw[i];
+   delay_ms(speed);//转速调节
+  }
+}
+
+
+//停止转动
+void MotorStop(void)
+{
+ MotorData=0x00;
+}
 
 //针对 STC15W4K56S4 系列 IO口初始化
 //io口初始化 P0 P1 P2 P3 P4 为准双向IO口   
