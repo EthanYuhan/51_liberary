@@ -34,5 +34,7 @@ void LCD12864_VerticalRoll(uchar N_Pixel); //¾í¶¯ÏÔÊ¾
 void LCD12864_Roll(void);
 void LCD12864_pixel(unsigned char x, unsigned char y, unsigned char attr);
 void LCD_line_h(unsigned char y, unsigned char attr);
+void print(uchar *str);
+void print_n(unsigned char x, unsigned char y,unsigned int num, unsigned char num_bit);
 
 #endif

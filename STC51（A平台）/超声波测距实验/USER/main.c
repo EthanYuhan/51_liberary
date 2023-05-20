@@ -53,7 +53,6 @@ void Conut(void)
 void zd0() interrupt 1 using 1	 //T0中断用来计数器溢出,超过测距范围
   {
     //flag=1;							 //中断溢出标志
-		
 		time ++ ;
 		
   }
@@ -67,9 +66,6 @@ void zd0() interrupt 1 using 1	 //T0中断用来计数器溢出,超过测距范围
 	  Trig=0;
 
   }
-
-  
-
 
 void IO_init(void)
 {
@@ -137,12 +133,4 @@ void main(void)
 		
 		 delay1ms(80);
 	}
-	
-	
-	
-	
-	
-	
-
-  
 }

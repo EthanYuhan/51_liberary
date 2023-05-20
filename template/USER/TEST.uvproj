@@ -324,7 +324,7 @@
               <MiscControls></MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>..\USER;..\README;..\HARDWARE\lcd12864;..\SYSTEM\delay;..\SYSTEM\sys;..\HARDWARE\key;..\HARDWARE\motor;..\HARDWARE\timer;..\HARDWARE\ad;..\HARDWARE\ds1302;..\HARDWARE\interrupt;..\HARDWARE\dht11;..\HARDWARE\eeprom;..\HARDWARE\interrupt</IncludePath>
+              <IncludePath>..\USER;..\README;..\HARDWARE\lcd12864;..\SYSTEM\delay;..\SYSTEM\sys;..\HARDWARE\key;..\HARDWARE\motor;..\HARDWARE\timer;..\HARDWARE\ad;..\HARDWARE\ds1302;..\HARDWARE\interrupt;..\HARDWARE\dht11;..\HARDWARE\eeprom;..\HARDWARE\interrupt;..\HARDWARE\motor;..\HARDWARE\mpu6050</IncludePath>
             </VariousControls>
           </C51>
           <Ax51>
@@ -425,6 +425,16 @@
               <FileName>dht11.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\HARDWARE\dht11\dht11.c</FilePath>
+            </File>
+            <File>
+              <FileName>motor.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\HARDWARE\motor\motor.c</FilePath>
+            </File>
+            <File>
+              <FileName>mpu6050.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\HARDWARE\mpu6050\mpu6050.c</FilePath>
             </File>
           </Files>
         </Group>

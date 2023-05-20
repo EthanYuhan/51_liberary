@@ -15,7 +15,7 @@ void ds1302_scan(void);  // ±º‰œ‘ æ
 void Write_Ds1302(u8 address,u8 dat);
 u8 bcd_read(u8 add);
 u8 Read_Ds1302 ( u8 address );
-
+void Set_RTC();
 
 #endif
 

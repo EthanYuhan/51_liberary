@@ -223,3 +223,50 @@ void LCD12864_VerticalRoll(uchar N_Pixel)
     LCD12864_WriteCmd(0x40|N_Pixel);//上卷N行（像素）
 }
 
+/*********************************************************************************************************
+** 函数功能 ：向液晶连续写入一段字符串
+** 函数说明 ：字符可以是任何字符，包括汉字，但是汉字必须是写在一个连续的16*16的点阵中
+** 函数举例 ：Write_12864_String("LCD12864液晶实验")，这段字符串有8个英文字符，总共占4个16*16的点阵，后面的四个同样占4个16*16的点阵
+** 错误举例 ：Write_12864_String("LCD液晶显示"),前面的三个字符占了一个半的16*16单元的点阵，会导致后面的汉字没法正常显示
+** 入口参数 ：待写入的字符串
+** 出口参数 ：无
+*********************************************************************************************************/
+void print(uchar *str)//写入字符串或者汉字
+{
+	uchar *p;
+	p = str;
+	while(*p != 0)
+	{
+		LCD12864_WriteData(*p);
+		p = ++str;
+	}	
+}
+
+
+//定位输出数字
+//x: 0 - 3  (行)
+//y: 0 - 15 (列)
+//num: 0 - 65535	要显示的数字
+//num_bit: 0 - 5	数字的位数
+void print_n(unsigned char x, unsigned char y,unsigned int num, unsigned char num_bit)
+{
+	char i;
+	unsigned char ii;
+	unsigned char dat[6];
+	LCD12864_SetWindow(x,y);
+	for(i = 0; i < 6; i++) dat[i] = 0; i = 0;	//初始化数据
+	while(num / 10)								//拆位
+	{
+		dat[i] = num % 10;						//最低位
+		num /= 10; i++;		
+	}
+	dat[i] = num;								//最高位
+	ii = i;										//保存dat的位数
+	for(; i >= 0; i--)	dat[i] += 48;			//转化成ASCII
+	for(i = 0; i < num_bit; i++)
+		LCD12864_WriteData(0x20);					//清显示区域
+
+	LCD12864_SetWindow(x,y);
+	for(i = ii; i >= 0; i--)
+		LCD12864_WriteData(dat[i]);					//输出数值
+}

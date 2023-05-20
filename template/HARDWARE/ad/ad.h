@@ -8,8 +8,3 @@ u16 GetADCResult(u8 ch);  //¶ÁÈ¡P1.0¿ÚADÖµ
 
 
 #endif
-
-
-
-
-

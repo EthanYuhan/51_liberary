@@ -7,19 +7,6 @@
 //定制器和步进电机控制代码
 
 
-u16 TimerCount = 0;
-u8  PulseNum = 0;   	//脉冲计数
-u8  MoterCount = 0; 	//步进电机控制计数
-u16 AdcCount = 0 ; 		//adc采样计数
-u16 WaiteTimeCount = 0; //静止状态等待时间计数
-
-extern u8 MoterSpeed; //定制器2控制步进电机转速
-extern u8 AdcFlag ;	  //adc采样标志
-extern u16 ad; 		  //ADC采样值
-
-
-
-
 // 步进电机逆时针旋转相序表
 u8 code CCW[8]={0x08,0x0c,0x04,0x06,0x02,0x03,0x01,0x09};
 
@@ -68,7 +55,6 @@ void Timer2Init(void)//250微秒@24.000MHz
 void tm0() interrupt 1 using 1 //定时器0中断
 {
 	
-  WaiteTimeCount ++ ;          //10毫秒加一
 
 }
 
@@ -78,31 +64,6 @@ void tm0() interrupt 1 using 1 //定时器0中断
 
 void tm2() interrupt 12  //定时器2中断
 {
-#if DRIVING_SIMULATION	
-	
-	TimerCount ++ ;     //定时器2脉冲模拟效果
-	if(TimerCount>4000) //定时超过 1秒
-	{		
-		PulseNum ++ ;
-		TimerCount = 0;
-	}
-	
-#else
-	
-	TimerCount ++ ; 	
-	if(TimerCount >MoterSpeed)   //定时超过  MoterSpeed为步进电机速度控制
-	{
-		MoterCount ++ ;  			
-		TimerCount = 0;		
-		Give(CCW[MoterCount%8]); //控制电机
-	}	
-	if( MoterCount%64==63 )      //定时ADC采样标志位
-	{
-		MoterCount = 0;		
-		AdcFlag = 1;
-	}	
-	
-#endif	
 		
 }
 
